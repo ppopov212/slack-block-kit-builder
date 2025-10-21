@@ -46,7 +46,11 @@ class TestSection:
 
     def test_builder_pattern(self):
         """Test builder pattern for section."""
-        section = Section.create("Hello").set_text("Updated text", "mrkdwn").set_block_id("section_1")
+        section = (
+            Section.create("Hello")
+            .set_text("Updated text", "mrkdwn")
+            .set_block_id("section_1")
+        )
         assert section.text.text == "Updated text"
         assert section.text.type == "mrkdwn"
         assert section.block_id == "section_1"
@@ -112,18 +116,29 @@ class TestImageBlock:
 
     def test_create_with_title(self):
         """Test creating image block with title."""
-        image = ImageBlock.create("https://example.com/image.png", "Alt text", title="Image Title")
+        image = ImageBlock.create(
+            "https://example.com/image.png", "Alt text", title="Image Title"
+        )
         assert image.title.text == "Image Title"
 
     def test_builder_pattern(self):
         """Test builder pattern for image block."""
-        image = ImageBlock.create("https://example.com/image.png", "Alt text").set_title("Image Title").set_block_id("image_1")
+        image = (
+            ImageBlock.create("https://example.com/image.png", "Alt text")
+            .set_title("Image Title")
+            .set_block_id("image_1")
+        )
         assert image.title.text == "Image Title"
         assert image.block_id == "image_1"
 
     def test_build(self):
         """Test building image block to dict."""
-        image = ImageBlock.create("https://example.com/image.png", "Alt text", title="Image Title", block_id="image_1")
+        image = ImageBlock.create(
+            "https://example.com/image.png",
+            "Alt text",
+            title="Image Title",
+            block_id="image_1",
+        )
         result = image.build()
         expected = {
             "type": "image",
@@ -140,7 +155,10 @@ class TestActions:
 
     def test_create_basic(self):
         """Test creating basic actions block."""
-        buttons = [Button.create("Button 1", "btn_1"), Button.create("Button 2", "btn_2")]
+        buttons = [
+            Button.create("Button 1", "btn_1"),
+            Button.create("Button 2", "btn_2"),
+        ]
         actions = Actions.create(buttons)
         assert actions.type == "actions"
         assert len(actions.elements) == 2
@@ -157,7 +175,10 @@ class TestActions:
 
     def test_build(self):
         """Test building actions block to dict."""
-        buttons = [Button.create("Button 1", "btn_1"), Button.create("Button 2", "btn_2")]
+        buttons = [
+            Button.create("Button 1", "btn_1"),
+            Button.create("Button 2", "btn_2"),
+        ]
         actions = Actions.create(buttons, block_id="actions_1")
         result = actions.build()
         expected = {
@@ -181,7 +202,9 @@ class TestActions:
     def test_elements_count_validation(self):
         """Test actions elements count validation."""
         buttons = [Button.create(f"Button {i}", f"btn_{i}") for i in range(26)]
-        with pytest.raises(ValueError, match="Number of elements 26 exceeds maximum of 25"):
+        with pytest.raises(
+            ValueError, match="Number of elements 26 exceeds maximum of 25"
+        ):
             Actions.create(buttons)
 
 
@@ -200,7 +223,9 @@ class TestContext:
         """Test builder pattern for context block."""
         elements = [PlainText.create("Context text")]
         context = Context.create(elements)
-        context.add_element(Button.create("Button", "btn_1")).add_text("More text").set_block_id("context_1")
+        context.add_element(Button.create("Button", "btn_1")).add_text(
+            "More text"
+        ).set_block_id("context_1")
         assert len(context.elements) == 3
         assert context.block_id == "context_1"
 
@@ -226,7 +251,9 @@ class TestContext:
     def test_elements_count_validation(self):
         """Test context elements count validation."""
         elements = [PlainText.create(f"Text {i}") for i in range(11)]
-        with pytest.raises(ValueError, match="Number of elements 11 exceeds maximum of 10"):
+        with pytest.raises(
+            ValueError, match="Number of elements 11 exceeds maximum of 10"
+        ):
             Context.create(elements)
 
 
@@ -254,7 +281,9 @@ class TestInput:
         """Test builder pattern for input block."""
         text_input = PlainTextInput.create("text_1")
         input_block = Input.create("Label", text_input)
-        input_block.set_hint("Hint text").set_optional(True).set_dispatch_action(True).set_block_id("input_1")
+        input_block.set_hint("Hint text").set_optional(True).set_dispatch_action(
+            True
+        ).set_block_id("input_1")
         assert input_block.hint.text == "Hint text"
         assert input_block.optional is True
         assert input_block.dispatch_action is True
@@ -263,7 +292,9 @@ class TestInput:
     def test_build(self):
         """Test building input block to dict."""
         text_input = PlainTextInput.create("text_1")
-        input_block = Input.create("Label", text_input, hint="Hint text", optional=True, block_id="input_1")
+        input_block = Input.create(
+            "Label", text_input, hint="Hint text", optional=True, block_id="input_1"
+        )
         result = input_block.build()
         expected = {
             "type": "input",
@@ -282,14 +313,18 @@ class TestInput:
         """Test input label length validation."""
         long_label = "x" * 2001
         text_input = PlainTextInput.create("text_1")
-        with pytest.raises(ValueError, match="Label length 2001 exceeds maximum of 2000"):
+        with pytest.raises(
+            ValueError, match="Label length 2001 exceeds maximum of 2000"
+        ):
             Input.create(long_label, text_input)
 
     def test_hint_length_validation(self):
         """Test input hint length validation."""
         long_hint = "x" * 2001
         text_input = PlainTextInput.create("text_1")
-        with pytest.raises(ValueError, match="Hint length 2001 exceeds maximum of 2000"):
+        with pytest.raises(
+            ValueError, match="Hint length 2001 exceeds maximum of 2000"
+        ):
             Input.create("Label", text_input, hint=long_hint)
 
 

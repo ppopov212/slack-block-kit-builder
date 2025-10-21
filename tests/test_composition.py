@@ -48,7 +48,9 @@ class TestPlainText:
     def test_text_length_validation(self):
         """Test text length validation."""
         long_text = "x" * 3001
-        with pytest.raises(ValueError, match="Text length 3001 exceeds maximum of 3000"):
+        with pytest.raises(
+            ValueError, match="Text length 3001 exceeds maximum of 3000"
+        ):
             PlainText.create(long_text)
 
 
@@ -165,13 +167,19 @@ class TestOption:
 
     def test_builder_pattern(self):
         """Test builder pattern for option."""
-        option = Option.create("Option 1", "value1").set_description("Description").set_url("https://example.com")
+        option = (
+            Option.create("Option 1", "value1")
+            .set_description("Description")
+            .set_url("https://example.com")
+        )
         assert option.description.text == "Description"
         assert option.url == "https://example.com"
 
     def test_build(self):
         """Test building option to dict."""
-        option = Option.create("Option 1", "value1", description="Description", url="https://example.com")
+        option = Option.create(
+            "Option 1", "value1", description="Description", url="https://example.com"
+        )
         result = option.build()
         expected = {
             "text": {"type": "plain_text", "text": "Option 1"},
@@ -184,7 +192,9 @@ class TestOption:
     def test_value_length_validation(self):
         """Test option value length validation."""
         long_value = "x" * 76
-        with pytest.raises(ValueError, match="Option value length 76 exceeds maximum of 75"):
+        with pytest.raises(
+            ValueError, match="Option value length 76 exceeds maximum of 75"
+        ):
             Option.create("Option 1", long_value)
 
 
@@ -193,7 +203,10 @@ class TestOptionGroup:
 
     def test_create_basic(self):
         """Test creating basic option group."""
-        options = [Option.create("Option 1", "value1"), Option.create("Option 2", "value2")]
+        options = [
+            Option.create("Option 1", "value1"),
+            Option.create("Option 2", "value2"),
+        ]
         group = OptionGroup.create("Group 1", options)
         assert group.label.text == "Group 1"
         assert len(group.options) == 2
@@ -208,7 +221,10 @@ class TestOptionGroup:
 
     def test_build(self):
         """Test building option group to dict."""
-        options = [Option.create("Option 1", "value1"), Option.create("Option 2", "value2")]
+        options = [
+            Option.create("Option 1", "value1"),
+            Option.create("Option 2", "value2"),
+        ]
         group = OptionGroup.create("Group 1", options)
         result = group.build()
         expected = {
@@ -223,7 +239,9 @@ class TestOptionGroup:
     def test_options_count_validation(self):
         """Test option group options count validation."""
         options = [Option.create(f"Option {i}", f"value{i}") for i in range(101)]
-        with pytest.raises(ValueError, match="Number of options 101 exceeds maximum of 100"):
+        with pytest.raises(
+            ValueError, match="Number of options 101 exceeds maximum of 100"
+        ):
             OptionGroup.create("Group 1", options)
 
 
@@ -237,7 +255,9 @@ class TestDispatchActionConfiguration:
 
     def test_create_multiple_triggers(self):
         """Test creating dispatch action configuration with multiple triggers."""
-        config = DispatchActionConfiguration.create(["on_enter_pressed", "on_character_entered"])
+        config = DispatchActionConfiguration.create(
+            ["on_enter_pressed", "on_character_entered"]
+        )
         assert config.trigger_actions_on == ["on_enter_pressed", "on_character_entered"]
 
     def test_build(self):
@@ -265,7 +285,12 @@ class TestFilter:
 
     def test_builder_pattern(self):
         """Test builder pattern for filter."""
-        filter_obj = Filter.create().set_include(["public"]).set_exclude_external_shared_channels(True).set_exclude_bot_users(True)
+        filter_obj = (
+            Filter.create()
+            .set_include(["public"])
+            .set_exclude_external_shared_channels(True)
+            .set_exclude_bot_users(True)
+        )
         assert filter_obj.include == ["public"]
         assert filter_obj.exclude_external_shared_channels is True
         assert filter_obj.exclude_bot_users is True

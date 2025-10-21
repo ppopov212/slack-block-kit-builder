@@ -53,7 +53,9 @@ class TestMessage:
 
     def test_add_image(self):
         """Test adding image to message."""
-        message = Message.create().add_image("https://example.com/image.png", "Alt text")
+        message = Message.create().add_image(
+            "https://example.com/image.png", "Alt text"
+        )
         assert len(message.blocks) == 1
         assert message.blocks[0].type == "image"
         assert message.blocks[0].image_url == "https://example.com/image.png"
@@ -61,7 +63,10 @@ class TestMessage:
 
     def test_add_actions(self):
         """Test adding actions to message."""
-        buttons = [Button.create("Button 1", "btn_1"), Button.create("Button 2", "btn_2")]
+        buttons = [
+            Button.create("Button 1", "btn_1"),
+            Button.create("Button 2", "btn_2"),
+        ]
         message = Message.create().add_actions(buttons)
         assert len(message.blocks) == 1
         assert message.blocks[0].type == "actions"
@@ -100,7 +105,9 @@ class TestMessage:
 
     def test_add_video(self):
         """Test adding video to message."""
-        message = Message.create().add_video("Video Title", "https://example.com/video.mp4")
+        message = Message.create().add_video(
+            "Video Title", "https://example.com/video.mp4"
+        )
         assert len(message.blocks) == 1
         assert message.blocks[0].type == "video"
         assert message.blocks[0].title.text == "Video Title"
@@ -167,7 +174,9 @@ class TestMessage:
         message = Message.create()
         for i in range(51):  # Exceeds MAX_BLOCKS_PER_MESSAGE
             message.add_section(f"Section {i}")
-        with pytest.raises(ValueError, match="Number of blocks 51 exceeds maximum of 50"):
+        with pytest.raises(
+            ValueError, match="Number of blocks 51 exceeds maximum of 50"
+        ):
             message.build()
 
 
@@ -275,7 +284,9 @@ class TestModal:
         modal = Modal.create("Modal Title")
         for i in range(101):  # Exceeds MAX_BLOCKS_PER_MODAL
             modal.add_section(f"Section {i}")
-        with pytest.raises(ValueError, match="Number of blocks 101 exceeds maximum of 100"):
+        with pytest.raises(
+            ValueError, match="Number of blocks 101 exceeds maximum of 100"
+        ):
             modal.build()
 
 
@@ -311,7 +322,10 @@ class TestHomeTab:
 
     def test_add_actions(self):
         """Test adding actions to home tab."""
-        buttons = [Button.create("Button 1", "btn_1"), Button.create("Button 2", "btn_2")]
+        buttons = [
+            Button.create("Button 1", "btn_1"),
+            Button.create("Button 2", "btn_2"),
+        ]
         home_tab = HomeTab.create().add_actions(buttons)
         assert len(home_tab.blocks) == 1
         assert home_tab.blocks[0].type == "actions"
@@ -335,9 +349,7 @@ class TestHomeTab:
     def test_build(self):
         """Test building home tab to dict."""
         home_tab = (
-            HomeTab.create()
-            .add_section("Hello World")
-            .set_private_metadata("metadata")
+            HomeTab.create().add_section("Hello World").set_private_metadata("metadata")
         )
         result = home_tab.build()
         expected = {
@@ -357,5 +369,7 @@ class TestHomeTab:
         home_tab = HomeTab.create()
         for i in range(101):  # Exceeds MAX_BLOCKS_PER_HOME_TAB
             home_tab.add_section(f"Section {i}")
-        with pytest.raises(ValueError, match="Number of blocks 101 exceeds maximum of 100"):
+        with pytest.raises(
+            ValueError, match="Number of blocks 101 exceeds maximum of 100"
+        ):
             home_tab.build()

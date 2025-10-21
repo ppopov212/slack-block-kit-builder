@@ -70,7 +70,9 @@ class Section(Block):
             block_id=block_id,
         )
 
-    def set_text(self, text: str, text_type: Literal["plain_text", "mrkdwn"] = "plain_text") -> "Section":
+    def set_text(
+        self, text: str, text_type: Literal["plain_text", "mrkdwn"] = "plain_text"
+    ) -> "Section":
         """Set text and return self for chaining."""
         if text_type == "plain_text":
             self.text = PlainText.create(text)
@@ -78,7 +80,11 @@ class Section(Block):
             self.text = MrkdwnText.create(text)
         return self
 
-    def set_fields(self, fields: List[str], text_type: Literal["plain_text", "mrkdwn"] = "plain_text") -> "Section":
+    def set_fields(
+        self,
+        fields: List[str],
+        text_type: Literal["plain_text", "mrkdwn"] = "plain_text",
+    ) -> "Section":
         """Set fields and return self for chaining."""
         if text_type == "plain_text":
             self.fields = [PlainText.create(field) for field in fields]
@@ -113,7 +119,6 @@ class Divider(Block):
         return cls(block_id=block_id)
 
 
-
 class ImageBlock(Block):
     """Image block."""
 
@@ -131,10 +136,12 @@ class ImageBlock(Block):
     def build(self) -> Dict[str, Any]:
         """Build the image block as a dictionary."""
         result = super().build()
-        result.update({
-            "image_url": self.image_url,
-            "alt_text": self.alt_text,
-        })
+        result.update(
+            {
+                "image_url": self.image_url,
+                "alt_text": self.alt_text,
+            }
+        )
         if self.title is not None:
             result["title"] = self.title.build()
         return result
@@ -195,7 +202,9 @@ class Actions(Block):
         return result
 
     @classmethod
-    def create(cls, elements: List[Element], block_id: Optional[str] = None) -> "Actions":
+    def create(
+        cls, elements: List[Element], block_id: Optional[str] = None
+    ) -> "Actions":
         """Create an actions block with builder pattern."""
         return cls(elements=elements, block_id=block_id)
 
@@ -203,7 +212,6 @@ class Actions(Block):
         """Add an element and return self for chaining."""
         self.elements.append(element)
         return self
-
 
 
 class Context(Block):
@@ -219,7 +227,9 @@ class Context(Block):
 
     @field_validator("elements")
     @classmethod
-    def validate_elements(cls, v: List[Union[Element, PlainText, MrkdwnText]]) -> List[Union[Element, PlainText, MrkdwnText]]:
+    def validate_elements(
+        cls, v: List[Union[Element, PlainText, MrkdwnText]]
+    ) -> List[Union[Element, PlainText, MrkdwnText]]:
         """Validate number of elements."""
         if len(v) > SlackConstraints.MAX_ELEMENTS_PER_CONTEXT:
             raise ValueError(
@@ -247,14 +257,15 @@ class Context(Block):
         self.elements.append(element)
         return self
 
-    def add_text(self, text: str, text_type: Literal["plain_text", "mrkdwn"] = "plain_text") -> "Context":
+    def add_text(
+        self, text: str, text_type: Literal["plain_text", "mrkdwn"] = "plain_text"
+    ) -> "Context":
         """Add text element and return self for chaining."""
         if text_type == "plain_text":
             self.elements.append(PlainText.create(text))
         else:
             self.elements.append(MrkdwnText.create(text))
         return self
-
 
 
 class Input(Block):
@@ -269,7 +280,9 @@ class Input(Block):
 
     @field_validator("label")
     @classmethod
-    def validate_label(cls, v: Union[PlainText, MrkdwnText]) -> Union[PlainText, MrkdwnText]:
+    def validate_label(
+        cls, v: Union[PlainText, MrkdwnText]
+    ) -> Union[PlainText, MrkdwnText]:
         """Validate label length."""
         if len(v.text) > SlackConstraints.MAX_INPUT_LABEL_LENGTH:
             raise ValueError(
@@ -279,7 +292,9 @@ class Input(Block):
 
     @field_validator("hint")
     @classmethod
-    def validate_hint(cls, v: Optional[Union[PlainText, MrkdwnText]]) -> Optional[Union[PlainText, MrkdwnText]]:
+    def validate_hint(
+        cls, v: Optional[Union[PlainText, MrkdwnText]]
+    ) -> Optional[Union[PlainText, MrkdwnText]]:
         """Validate hint length."""
         if v is not None and len(v.text) > SlackConstraints.MAX_INPUT_HINT_LENGTH:
             raise ValueError(
@@ -290,10 +305,12 @@ class Input(Block):
     def build(self) -> Dict[str, Any]:
         """Build the input block as a dictionary."""
         result = super().build()
-        result.update({
-            "label": self.label.build(),
-            "element": self.element.build(),
-        })
+        result.update(
+            {
+                "label": self.label.build(),
+                "element": self.element.build(),
+            }
+        )
         if self.hint is not None:
             result["hint"] = self.hint.build()
         if self.optional is not None:
@@ -360,17 +377,18 @@ class File(Block):
     def build(self) -> Dict[str, Any]:
         """Build the file block as a dictionary."""
         result = super().build()
-        result.update({
-            "external_id": self.external_id,
-            "source": self.source,
-        })
+        result.update(
+            {
+                "external_id": self.external_id,
+                "source": self.source,
+            }
+        )
         return result
 
     @classmethod
     def create(cls, external_id: str, block_id: Optional[str] = None) -> "File":
         """Create a file block with builder pattern."""
         return cls(external_id=external_id, block_id=block_id)
-
 
 
 class Header(Block):
@@ -394,7 +412,6 @@ class Header(Block):
     def create(cls, text: str, block_id: Optional[str] = None) -> "Header":
         """Create a header block with builder pattern."""
         return cls(text=PlainText.create(text), block_id=block_id)
-
 
 
 class Video(Block):
@@ -444,10 +461,12 @@ class Video(Block):
     def build(self) -> Dict[str, Any]:
         """Build the video block as a dictionary."""
         result = super().build()
-        result.update({
-            "title": self.title.build(),
-            "video_url": self.video_url,
-        })
+        result.update(
+            {
+                "title": self.title.build(),
+                "video_url": self.video_url,
+            }
+        )
         if self.title_url is not None:
             result["title_url"] = self.title_url
         if self.description is not None:
@@ -553,7 +572,9 @@ class RichText(Block):
         return result
 
     @classmethod
-    def create(cls, elements: List[Dict[str, Any]], block_id: Optional[str] = None) -> "RichText":
+    def create(
+        cls, elements: List[Dict[str, Any]], block_id: Optional[str] = None
+    ) -> "RichText":
         """Create a rich text block with builder pattern."""
         return cls(elements=elements, block_id=block_id)
 
@@ -561,4 +582,3 @@ class RichText(Block):
         """Add an element and return self for chaining."""
         self.elements.append(element)
         return self
-

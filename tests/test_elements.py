@@ -49,7 +49,13 @@ class TestButton:
 
     def test_create_with_properties(self):
         """Test creating button with properties."""
-        button = Button.create("Click me", "btn_1", url="https://example.com", value="value1", style="primary")
+        button = Button.create(
+            "Click me",
+            "btn_1",
+            url="https://example.com",
+            value="value1",
+            style="primary",
+        )
         assert button.url == "https://example.com"
         assert button.value == "value1"
         assert button.style == "primary"
@@ -68,7 +74,13 @@ class TestButton:
 
     def test_build(self):
         """Test building button to dict."""
-        button = Button.create("Click me", "btn_1", url="https://example.com", value="value1", style="primary")
+        button = Button.create(
+            "Click me",
+            "btn_1",
+            url="https://example.com",
+            value="value1",
+            style="primary",
+        )
         result = button.build()
         expected = {
             "type": "button",
@@ -83,7 +95,9 @@ class TestButton:
     def test_action_id_validation(self):
         """Test action ID validation."""
         long_action_id = "x" * 256
-        with pytest.raises(ValueError, match="Action ID length 256 exceeds maximum of 255"):
+        with pytest.raises(
+            ValueError, match="Action ID length 256 exceeds maximum of 255"
+        ):
             Button.create("Click me", long_action_id)
 
 
@@ -92,7 +106,10 @@ class TestCheckboxes:
 
     def test_create_basic(self):
         """Test creating basic checkboxes."""
-        options = [Option.create("Option 1", "value1"), Option.create("Option 2", "value2")]
+        options = [
+            Option.create("Option 1", "value1"),
+            Option.create("Option 2", "value2"),
+        ]
         checkboxes = Checkboxes.create("checkboxes_1", options)
         assert checkboxes.type == "checkboxes"
         assert checkboxes.action_id == "checkboxes_1"
@@ -109,7 +126,10 @@ class TestCheckboxes:
 
     def test_build(self):
         """Test building checkboxes to dict."""
-        options = [Option.create("Option 1", "value1"), Option.create("Option 2", "value2")]
+        options = [
+            Option.create("Option 1", "value1"),
+            Option.create("Option 2", "value2"),
+        ]
         checkboxes = Checkboxes.create("checkboxes_1", options)
         result = checkboxes.build()
         expected = {
@@ -125,7 +145,9 @@ class TestCheckboxes:
     def test_options_count_validation(self):
         """Test checkboxes options count validation."""
         options = [Option.create(f"Option {i}", f"value{i}") for i in range(101)]
-        with pytest.raises(ValueError, match="Number of options 101 exceeds maximum of 100"):
+        with pytest.raises(
+            ValueError, match="Number of options 101 exceeds maximum of 100"
+        ):
             Checkboxes.create("checkboxes_1", options)
 
 
@@ -142,14 +164,23 @@ class TestDatePicker:
 
     def test_builder_pattern(self):
         """Test builder pattern for date picker."""
-        picker = DatePicker.create("date_1").set_placeholder("Select date").set_initial_date("2023-01-01").set_focus_on_load(True)
+        picker = (
+            DatePicker.create("date_1")
+            .set_placeholder("Select date")
+            .set_initial_date("2023-01-01")
+            .set_focus_on_load(True)
+        )
         assert picker.placeholder.text == "Select date"
         assert picker.initial_date == "2023-01-01"
         assert picker.focus_on_load is True
 
     def test_build(self):
         """Test building date picker to dict."""
-        picker = DatePicker.create("date_1").set_placeholder("Select date").set_initial_date("2023-01-01")
+        picker = (
+            DatePicker.create("date_1")
+            .set_placeholder("Select date")
+            .set_initial_date("2023-01-01")
+        )
         result = picker.build()
         expected = {
             "type": "datepicker",
@@ -171,14 +202,23 @@ class TestTimePicker:
 
     def test_builder_pattern(self):
         """Test builder pattern for time picker."""
-        picker = TimePicker.create("time_1").set_placeholder("Select time").set_initial_time("12:00").set_focus_on_load(True)
+        picker = (
+            TimePicker.create("time_1")
+            .set_placeholder("Select time")
+            .set_initial_time("12:00")
+            .set_focus_on_load(True)
+        )
         assert picker.placeholder.text == "Select time"
         assert picker.initial_time == "12:00"
         assert picker.focus_on_load is True
 
     def test_build(self):
         """Test building time picker to dict."""
-        picker = TimePicker.create("time_1").set_placeholder("Select time").set_initial_time("12:00")
+        picker = (
+            TimePicker.create("time_1")
+            .set_placeholder("Select time")
+            .set_initial_time("12:00")
+        )
         result = picker.build()
         expected = {
             "type": "timepicker",
@@ -200,7 +240,11 @@ class TestDatetimePicker:
 
     def test_builder_pattern(self):
         """Test builder pattern for datetime picker."""
-        picker = DatetimePicker.create("datetime_1").set_initial_date_time(1640995200).set_focus_on_load(True)
+        picker = (
+            DatetimePicker.create("datetime_1")
+            .set_initial_date_time(1640995200)
+            .set_focus_on_load(True)
+        )
         assert picker.initial_date_time == 1640995200
         assert picker.focus_on_load is True
 
@@ -227,14 +271,23 @@ class TestEmailInput:
 
     def test_builder_pattern(self):
         """Test builder pattern for email input."""
-        input_elem = EmailInput.create("email_1").set_placeholder("Enter email").set_initial_value("test@example.com").set_focus_on_load(True)
+        input_elem = (
+            EmailInput.create("email_1")
+            .set_placeholder("Enter email")
+            .set_initial_value("test@example.com")
+            .set_focus_on_load(True)
+        )
         assert input_elem.placeholder.text == "Enter email"
         assert input_elem.initial_value == "test@example.com"
         assert input_elem.focus_on_load is True
 
     def test_build(self):
         """Test building email input to dict."""
-        input_elem = EmailInput.create("email_1").set_placeholder("Enter email").set_initial_value("test@example.com")
+        input_elem = (
+            EmailInput.create("email_1")
+            .set_placeholder("Enter email")
+            .set_initial_value("test@example.com")
+        )
         result = input_elem.build()
         expected = {
             "type": "email_text_input",
@@ -272,7 +325,11 @@ class TestNumberInput:
 
     def test_build(self):
         """Test building number input to dict."""
-        input_elem = NumberInput.create("number_1").set_is_decimal_allowed(True).set_initial_value("10")
+        input_elem = (
+            NumberInput.create("number_1")
+            .set_is_decimal_allowed(True)
+            .set_initial_value("10")
+        )
         result = input_elem.build()
         expected = {
             "type": "number_input",
@@ -312,7 +369,11 @@ class TestPlainTextInput:
 
     def test_build(self):
         """Test building plain text input to dict."""
-        input_elem = PlainTextInput.create("text_1").set_placeholder("Enter text").set_multiline(True)
+        input_elem = (
+            PlainTextInput.create("text_1")
+            .set_placeholder("Enter text")
+            .set_multiline(True)
+        )
         result = input_elem.build()
         expected = {
             "type": "plain_text_input",
@@ -334,14 +395,23 @@ class TestURLInput:
 
     def test_builder_pattern(self):
         """Test builder pattern for URL input."""
-        input_elem = URLInput.create("url_1").set_placeholder("Enter URL").set_initial_value("https://example.com").set_focus_on_load(True)
+        input_elem = (
+            URLInput.create("url_1")
+            .set_placeholder("Enter URL")
+            .set_initial_value("https://example.com")
+            .set_focus_on_load(True)
+        )
         assert input_elem.placeholder.text == "Enter URL"
         assert input_elem.initial_value == "https://example.com"
         assert input_elem.focus_on_load is True
 
     def test_build(self):
         """Test building URL input to dict."""
-        input_elem = URLInput.create("url_1").set_placeholder("Enter URL").set_initial_value("https://example.com")
+        input_elem = (
+            URLInput.create("url_1")
+            .set_placeholder("Enter URL")
+            .set_initial_value("https://example.com")
+        )
         result = input_elem.build()
         expected = {
             "type": "url_text_input",
@@ -357,7 +427,10 @@ class TestRadioButtons:
 
     def test_create_basic(self):
         """Test creating basic radio buttons."""
-        options = [Option.create("Option 1", "value1"), Option.create("Option 2", "value2")]
+        options = [
+            Option.create("Option 1", "value1"),
+            Option.create("Option 2", "value2"),
+        ]
         radio = RadioButtons.create("radio_1", options)
         assert radio.type == "radio_buttons"
         assert radio.action_id == "radio_1"
@@ -374,7 +447,10 @@ class TestRadioButtons:
 
     def test_build(self):
         """Test building radio buttons to dict."""
-        options = [Option.create("Option 1", "value1"), Option.create("Option 2", "value2")]
+        options = [
+            Option.create("Option 1", "value1"),
+            Option.create("Option 2", "value2"),
+        ]
         radio = RadioButtons.create("radio_1", options)
         result = radio.build()
         expected = {
@@ -393,7 +469,10 @@ class TestStaticSelect:
 
     def test_create_basic(self):
         """Test creating basic static select."""
-        options = [Option.create("Option 1", "value1"), Option.create("Option 2", "value2")]
+        options = [
+            Option.create("Option 1", "value1"),
+            Option.create("Option 2", "value2"),
+        ]
         select = StaticSelect.create("select_1", "Choose option", options)
         assert select.type == "static_select"
         assert select.action_id == "select_1"
@@ -411,7 +490,10 @@ class TestStaticSelect:
 
     def test_build(self):
         """Test building static select to dict."""
-        options = [Option.create("Option 1", "value1"), Option.create("Option 2", "value2")]
+        options = [
+            Option.create("Option 1", "value1"),
+            Option.create("Option 2", "value2"),
+        ]
         select = StaticSelect.create("select_1", "Choose option", options)
         result = select.build()
         expected = {
@@ -440,7 +522,9 @@ class TestExternalSelect:
         """Test builder pattern for external select."""
         select = ExternalSelect.create("select_1", "Choose option")
         initial_option = Option.create("Option 1", "value1")
-        select.set_initial_option(initial_option).set_min_query_length(2).set_focus_on_load(True)
+        select.set_initial_option(initial_option).set_min_query_length(
+            2
+        ).set_focus_on_load(True)
         assert select.initial_option == initial_option
         assert select.min_query_length == 2
         assert select.focus_on_load is True
@@ -499,9 +583,12 @@ class TestConversationsSelect:
     def test_builder_pattern(self):
         """Test builder pattern for conversations select."""
         from slack_block_kit_builder.composition import Filter
+
         filter_obj = Filter.create(include=["public"])
         select = ConversationsSelect.create("conversations_1", "Choose conversation")
-        select.set_initial_conversation("C123456").set_default_to_current_conversation(True).set_filter(filter_obj).set_focus_on_load(True)
+        select.set_initial_conversation("C123456").set_default_to_current_conversation(
+            True
+        ).set_filter(filter_obj).set_focus_on_load(True)
         assert select.initial_conversation == "C123456"
         assert select.default_to_current_conversation is True
         assert select.filter == filter_obj
@@ -553,7 +640,10 @@ class TestMultiStaticSelect:
 
     def test_create_basic(self):
         """Test creating basic multi static select."""
-        options = [Option.create("Option 1", "value1"), Option.create("Option 2", "value2")]
+        options = [
+            Option.create("Option 1", "value1"),
+            Option.create("Option 2", "value2"),
+        ]
         select = MultiStaticSelect.create("multi_select_1", "Choose options", options)
         assert select.type == "multi_static_select"
         assert select.action_id == "multi_select_1"
@@ -565,14 +655,19 @@ class TestMultiStaticSelect:
         options = [Option.create("Option 1", "value1")]
         select = MultiStaticSelect.create("multi_select_1", "Choose options", options)
         initial_options = [Option.create("Option 1", "value1")]
-        select.set_initial_options(initial_options).set_max_selected_items(5).set_focus_on_load(True)
+        select.set_initial_options(initial_options).set_max_selected_items(
+            5
+        ).set_focus_on_load(True)
         assert select.initial_options == initial_options
         assert select.max_selected_items == 5
         assert select.focus_on_load is True
 
     def test_build(self):
         """Test building multi static select to dict."""
-        options = [Option.create("Option 1", "value1"), Option.create("Option 2", "value2")]
+        options = [
+            Option.create("Option 1", "value1"),
+            Option.create("Option 2", "value2"),
+        ]
         select = MultiStaticSelect.create("multi_select_1", "Choose options", options)
         result = select.build()
         expected = {
@@ -601,7 +696,9 @@ class TestMultiExternalSelect:
         """Test builder pattern for multi external select."""
         select = MultiExternalSelect.create("multi_external_1", "Choose options")
         initial_options = [Option.create("Option 1", "value1")]
-        select.set_initial_options(initial_options).set_min_query_length(2).set_max_selected_items(5).set_focus_on_load(True)
+        select.set_initial_options(initial_options).set_min_query_length(
+            2
+        ).set_max_selected_items(5).set_focus_on_load(True)
         assert select.initial_options == initial_options
         assert select.min_query_length == 2
         assert select.max_selected_items == 5
@@ -632,7 +729,9 @@ class TestMultiUsersSelect:
     def test_builder_pattern(self):
         """Test builder pattern for multi users select."""
         select = MultiUsersSelect.create("multi_users_1", "Choose users")
-        select.set_initial_users(["U123456", "U789012"]).set_max_selected_items(5).set_focus_on_load(True)
+        select.set_initial_users(["U123456", "U789012"]).set_max_selected_items(
+            5
+        ).set_focus_on_load(True)
         assert select.initial_users == ["U123456", "U789012"]
         assert select.max_selected_items == 5
         assert select.focus_on_load is True
@@ -654,7 +753,9 @@ class TestMultiConversationsSelect:
 
     def test_create_basic(self):
         """Test creating basic multi conversations select."""
-        select = MultiConversationsSelect.create("multi_conversations_1", "Choose conversations")
+        select = MultiConversationsSelect.create(
+            "multi_conversations_1", "Choose conversations"
+        )
         assert select.type == "multi_conversations_select"
         assert select.action_id == "multi_conversations_1"
         assert select.placeholder.text == "Choose conversations"
@@ -662,9 +763,16 @@ class TestMultiConversationsSelect:
     def test_builder_pattern(self):
         """Test builder pattern for multi conversations select."""
         from slack_block_kit_builder.composition import Filter
+
         filter_obj = Filter.create(include=["public"])
-        select = MultiConversationsSelect.create("multi_conversations_1", "Choose conversations")
-        select.set_initial_conversations(["C123456", "C789012"]).set_default_to_current_conversation(True).set_filter(filter_obj).set_max_selected_items(5).set_focus_on_load(True)
+        select = MultiConversationsSelect.create(
+            "multi_conversations_1", "Choose conversations"
+        )
+        select.set_initial_conversations(
+            ["C123456", "C789012"]
+        ).set_default_to_current_conversation(True).set_filter(
+            filter_obj
+        ).set_max_selected_items(5).set_focus_on_load(True)
         assert select.initial_conversations == ["C123456", "C789012"]
         assert select.default_to_current_conversation is True
         assert select.filter == filter_obj
@@ -673,7 +781,9 @@ class TestMultiConversationsSelect:
 
     def test_build(self):
         """Test building multi conversations select to dict."""
-        select = MultiConversationsSelect.create("multi_conversations_1", "Choose conversations")
+        select = MultiConversationsSelect.create(
+            "multi_conversations_1", "Choose conversations"
+        )
         result = select.build()
         expected = {
             "type": "multi_conversations_select",
@@ -696,7 +806,9 @@ class TestMultiChannelsSelect:
     def test_builder_pattern(self):
         """Test builder pattern for multi channels select."""
         select = MultiChannelsSelect.create("multi_channels_1", "Choose channels")
-        select.set_initial_channels(["C123456", "C789012"]).set_max_selected_items(5).set_focus_on_load(True)
+        select.set_initial_channels(["C123456", "C789012"]).set_max_selected_items(
+            5
+        ).set_focus_on_load(True)
         assert select.initial_channels == ["C123456", "C789012"]
         assert select.max_selected_items == 5
         assert select.focus_on_load is True
@@ -718,7 +830,10 @@ class TestOverflowMenu:
 
     def test_create_basic(self):
         """Test creating basic overflow menu."""
-        options = [Option.create("Option 1", "value1"), Option.create("Option 2", "value2")]
+        options = [
+            Option.create("Option 1", "value1"),
+            Option.create("Option 2", "value2"),
+        ]
         overflow = OverflowMenu.create("overflow_1", options)
         assert overflow.type == "overflow"
         assert overflow.action_id == "overflow_1"
@@ -728,12 +843,17 @@ class TestOverflowMenu:
         """Test builder pattern for overflow menu."""
         options = [Option.create("Option 1", "value1")]
         overflow = OverflowMenu.create("overflow_1", options)
-        overflow.set_confirm(ConfirmationDialog.create("Confirm", "Are you sure?", "Yes", "No"))
+        overflow.set_confirm(
+            ConfirmationDialog.create("Confirm", "Are you sure?", "Yes", "No")
+        )
         assert overflow.confirm is not None
 
     def test_build(self):
         """Test building overflow menu to dict."""
-        options = [Option.create("Option 1", "value1"), Option.create("Option 2", "value2")]
+        options = [
+            Option.create("Option 1", "value1"),
+            Option.create("Option 2", "value2"),
+        ]
         overflow = OverflowMenu.create("overflow_1", options)
         result = overflow.build()
         expected = {
@@ -749,7 +869,9 @@ class TestOverflowMenu:
     def test_options_count_validation(self):
         """Test overflow menu options count validation."""
         options = [Option.create(f"Option {i}", f"value{i}") for i in range(6)]
-        with pytest.raises(ValueError, match="Number of options 6 exceeds maximum of 5"):
+        with pytest.raises(
+            ValueError, match="Number of options 6 exceeds maximum of 5"
+        ):
             OverflowMenu.create("overflow_1", options)
 
 
@@ -766,13 +888,17 @@ class TestFileInput:
 
     def test_builder_pattern(self):
         """Test builder pattern for file input."""
-        file_input = FileInput.create("file_1").set_filetypes(["pdf", "doc"]).set_max_files(3)
+        file_input = (
+            FileInput.create("file_1").set_filetypes(["pdf", "doc"]).set_max_files(3)
+        )
         assert file_input.filetypes == ["pdf", "doc"]
         assert file_input.max_files == 3
 
     def test_build(self):
         """Test building file input to dict."""
-        file_input = FileInput.create("file_1").set_filetypes(["pdf", "doc"]).set_max_files(3)
+        file_input = (
+            FileInput.create("file_1").set_filetypes(["pdf", "doc"]).set_max_files(3)
+        )
         result = file_input.build()
         expected = {
             "type": "file_input",
@@ -794,14 +920,23 @@ class TestRichTextInput:
 
     def test_builder_pattern(self):
         """Test builder pattern for rich text input."""
-        input_elem = RichTextInput.create("rich_text_1").set_placeholder("Enter rich text").set_initial_value("Hello").set_focus_on_load(True)
+        input_elem = (
+            RichTextInput.create("rich_text_1")
+            .set_placeholder("Enter rich text")
+            .set_initial_value("Hello")
+            .set_focus_on_load(True)
+        )
         assert input_elem.placeholder.text == "Enter rich text"
         assert input_elem.initial_value == "Hello"
         assert input_elem.focus_on_load is True
 
     def test_build(self):
         """Test building rich text input to dict."""
-        input_elem = RichTextInput.create("rich_text_1").set_placeholder("Enter rich text").set_initial_value("Hello")
+        input_elem = (
+            RichTextInput.create("rich_text_1")
+            .set_placeholder("Enter rich text")
+            .set_initial_value("Hello")
+        )
         result = input_elem.build()
         expected = {
             "type": "rich_text_input",

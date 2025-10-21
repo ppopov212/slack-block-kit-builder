@@ -247,7 +247,9 @@ class Filter(BaseModel):
         if self.include is not None:
             result["include"] = self.include
         if self.exclude_external_shared_channels is not None:
-            result["exclude_external_shared_channels"] = self.exclude_external_shared_channels  # type: ignore[assignment]
+            result["exclude_external_shared_channels"] = (
+                self.exclude_external_shared_channels
+            )  # type: ignore[assignment]
         if self.exclude_bot_users is not None:
             result["exclude_bot_users"] = self.exclude_bot_users  # type: ignore[assignment]
         return result
@@ -266,7 +268,9 @@ class Filter(BaseModel):
             exclude_bot_users=exclude_bot_users,
         )
 
-    def set_include(self, include: List[Literal["im", "mpim", "private", "public"]]) -> "Filter":
+    def set_include(
+        self, include: List[Literal["im", "mpim", "private", "public"]]
+    ) -> "Filter":
         """Set include property and return self for chaining."""
         self.include = include
         return self

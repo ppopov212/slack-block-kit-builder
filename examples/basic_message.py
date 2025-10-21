@@ -11,7 +11,7 @@ def create_basic_message():
         .add_divider()
         .add_section(
             text="This is a *markdown* message with a button:",
-            accessory=Button.create("Click Me!", "btn_click")
+            accessory=Button.create("Click Me!", "btn_click"),
         )
         .add_context(["Built with slack-block-kit-builder"])
     )
@@ -25,11 +25,13 @@ def create_interactive_message():
         Message.create()
         .add_header("Interactive Message")
         .add_section("Choose an action:")
-        .add_actions([
-            Button.create("Approve", "btn_approve").style("primary"),
-            Button.create("Reject", "btn_reject").style("danger"),
-            Button.create("More Info", "btn_info")
-        ])
+        .add_actions(
+            [
+                Button.create("Approve", "btn_approve").style("primary"),
+                Button.create("Reject", "btn_reject").style("danger"),
+                Button.create("More Info", "btn_info"),
+            ]
+        )
         .add_context(["Use the buttons above to interact with this message"])
     )
 
@@ -49,23 +51,32 @@ def create_form_message():
     message = (
         Message.create()
         .add_section("Please fill out this form:")
-        .add_input("Name", PlainTextInput.create("name_input").placeholder("Enter your name"))
+        .add_input(
+            "Name", PlainTextInput.create("name_input").placeholder("Enter your name")
+        )
         .add_input("Date", DatePicker.create("date_input").placeholder("Select date"))
         .add_input(
             "Priority",
-            StaticSelect.create("priority_select", "Choose priority", [
-                Option.create("High", "high"),
-                Option.create("Medium", "medium"),
-                Option.create("Low", "low")
-            ])
+            StaticSelect.create(
+                "priority_select",
+                "Choose priority",
+                [
+                    Option.create("High", "high"),
+                    Option.create("Medium", "medium"),
+                    Option.create("Low", "low"),
+                ],
+            ),
         )
         .add_input(
             "Skills",
-            Checkboxes.create("skills_checkboxes", [
-                Option.create("Python", "python"),
-                Option.create("JavaScript", "javascript"),
-                Option.create("Go", "go")
-            ])
+            Checkboxes.create(
+                "skills_checkboxes",
+                [
+                    Option.create("Python", "python"),
+                    Option.create("JavaScript", "javascript"),
+                    Option.create("Go", "go"),
+                ],
+            ),
         )
     )
 

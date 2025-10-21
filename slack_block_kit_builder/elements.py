@@ -150,7 +150,9 @@ class Checkboxes(Element):
             "options": [option.build() for option in self.options],
         }
         if self.initial_options is not None:
-            result["initial_options"] = [option.build() for option in self.initial_options]
+            result["initial_options"] = [
+                option.build() for option in self.initial_options
+            ]
         if self.confirm is not None:
             result["confirm"] = self.confirm.build()  # type: ignore[assignment]
         if self.focus_on_load is not None:
@@ -391,7 +393,9 @@ class EmailInput(Element):
         self.initial_value = value
         return self
 
-    def set_dispatch_action_config(self, config: DispatchActionConfiguration) -> "EmailInput":
+    def set_dispatch_action_config(
+        self, config: DispatchActionConfiguration
+    ) -> "EmailInput":
         """Set dispatch action config and return self for chaining."""
         self.dispatch_action_config = config
         return self
@@ -465,7 +469,9 @@ class NumberInput(Element):
         self.max_value = value
         return self
 
-    def set_dispatch_action_config(self, config: DispatchActionConfiguration) -> "NumberInput":
+    def set_dispatch_action_config(
+        self, config: DispatchActionConfiguration
+    ) -> "NumberInput":
         """Set dispatch action config and return self for chaining."""
         self.dispatch_action_config = config
         return self
@@ -547,7 +553,9 @@ class PlainTextInput(Element):
         self.max_length = length
         return self
 
-    def set_dispatch_action_config(self, config: DispatchActionConfiguration) -> "PlainTextInput":
+    def set_dispatch_action_config(
+        self, config: DispatchActionConfiguration
+    ) -> "PlainTextInput":
         """Set dispatch action config and return self for chaining."""
         self.dispatch_action_config = config
         return self
@@ -605,7 +613,9 @@ class URLInput(Element):
         self.initial_value = value
         return self
 
-    def set_dispatch_action_config(self, config: DispatchActionConfiguration) -> "URLInput":
+    def set_dispatch_action_config(
+        self, config: DispatchActionConfiguration
+    ) -> "URLInput":
         """Set dispatch action config and return self for chaining."""
         self.dispatch_action_config = config
         return self
@@ -891,7 +901,9 @@ class ConversationsSelect(Element):
         if self.initial_conversation is not None:
             result["initial_conversation"] = self.initial_conversation
         if self.default_to_current_conversation is not None:
-            result["default_to_current_conversation"] = self.default_to_current_conversation  # type: ignore[assignment]
+            result["default_to_current_conversation"] = (
+                self.default_to_current_conversation
+            )  # type: ignore[assignment]
         if self.filter is not None:
             result["filter"] = self.filter.build()
         if self.confirm is not None:
@@ -910,7 +922,9 @@ class ConversationsSelect(Element):
         self.initial_conversation = conversation
         return self
 
-    def set_default_to_current_conversation(self, default: bool) -> "ConversationsSelect":
+    def set_default_to_current_conversation(
+        self, default: bool
+    ) -> "ConversationsSelect":
         """Set default to current conversation and return self for chaining."""
         self.default_to_current_conversation = default
         return self
@@ -1023,7 +1037,9 @@ class MultiStaticSelect(Element):
         if self.option_groups is not None:
             result["option_groups"] = [group.build() for group in self.option_groups]  # type: ignore[misc]
         if self.initial_options is not None:
-            result["initial_options"] = [option.build() for option in self.initial_options]  # type: ignore[misc]
+            result["initial_options"] = [
+                option.build() for option in self.initial_options
+            ]  # type: ignore[misc]
         if self.max_selected_items is not None:
             result["max_selected_items"] = self.max_selected_items  # type: ignore[assignment]
         if self.confirm is not None:
@@ -1072,6 +1088,7 @@ class MultiStaticSelect(Element):
 # Additional multi-select elements would follow the same pattern...
 # For brevity, I'll include a few more key ones:
 
+
 class MultiExternalSelect(Element):
     """Multi external select element."""
 
@@ -1098,7 +1115,9 @@ class MultiExternalSelect(Element):
             "placeholder": self.placeholder.build(),
         }
         if self.initial_options is not None:
-            result["initial_options"] = [option.build() for option in self.initial_options]  # type: ignore[misc]
+            result["initial_options"] = [
+                option.build() for option in self.initial_options
+            ]  # type: ignore[misc]
         if self.min_query_length is not None:
             result["min_query_length"] = self.min_query_length  # type: ignore[assignment]
         if self.max_selected_items is not None:
@@ -1240,7 +1259,9 @@ class RichTextInput(Element):
         """Validate action ID length."""
         return validate_action_id(v)
 
-    def set_placeholder(self, placeholder: Union[str, PlainText, MrkdwnText]) -> "RichTextInput":
+    def set_placeholder(
+        self, placeholder: Union[str, PlainText, MrkdwnText]
+    ) -> "RichTextInput":
         """Set placeholder and return self for chaining."""
         if isinstance(placeholder, str):
             self.placeholder = PlainText.create(placeholder)
@@ -1274,7 +1295,9 @@ class RichTextInput(Element):
         """Create a rich text input with builder pattern."""
         return cls(action_id=action_id)
 
-    def set_dispatch_action_config(self, config: DispatchActionConfiguration) -> "RichTextInput":
+    def set_dispatch_action_config(
+        self, config: DispatchActionConfiguration
+    ) -> "RichTextInput":
         """Set dispatch action config and return self for chaining."""
         self.dispatch_action_config = config
         return self
@@ -1402,7 +1425,9 @@ class MultiConversationsSelect(Element):
         if self.initial_conversations is not None:
             result["initial_conversations"] = self.initial_conversations
         if self.default_to_current_conversation is not None:
-            result["default_to_current_conversation"] = self.default_to_current_conversation  # type: ignore[assignment]
+            result["default_to_current_conversation"] = (
+                self.default_to_current_conversation
+            )  # type: ignore[assignment]
         if self.filter is not None:
             result["filter"] = self.filter.build()
         if self.max_selected_items is not None:
@@ -1418,12 +1443,16 @@ class MultiConversationsSelect(Element):
         """Create a multi conversations select with builder pattern."""
         return cls(action_id=action_id, placeholder=PlainText.create(placeholder))
 
-    def set_initial_conversations(self, conversations: List[str]) -> "MultiConversationsSelect":
+    def set_initial_conversations(
+        self, conversations: List[str]
+    ) -> "MultiConversationsSelect":
         """Set initial conversations and return self for chaining."""
         self.initial_conversations = conversations
         return self
 
-    def set_default_to_current_conversation(self, default: bool) -> "MultiConversationsSelect":
+    def set_default_to_current_conversation(
+        self, default: bool
+    ) -> "MultiConversationsSelect":
         """Set default to current conversation and return self for chaining."""
         self.default_to_current_conversation = default
         return self

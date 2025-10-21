@@ -17,7 +17,7 @@ from .blocks import (
     Section,
     Video,
 )
-from .composition import PlainText, MrkdwnText
+from .composition import MrkdwnText, PlainText
 from .elements import Element
 from .validators import SlackConstraints
 
@@ -77,7 +77,9 @@ class Message(BaseModel):
         block_id: Optional[str] = None,
     ) -> "Message":
         """Add a section block and return self for chaining."""
-        section = Section.create(text=text, fields=fields, accessory=accessory, block_id=block_id)
+        section = Section.create(
+            text=text, fields=fields, accessory=accessory, block_id=block_id
+        )
         self.blocks.append(section)
         return self
 
@@ -104,7 +106,9 @@ class Message(BaseModel):
         self.blocks.append(image)
         return self
 
-    def add_actions(self, elements: List[Element], block_id: Optional[str] = None) -> "Message":
+    def add_actions(
+        self, elements: List[Element], block_id: Optional[str] = None
+    ) -> "Message":
         """Add an actions block and return self for chaining."""
         actions = Actions.create(elements=elements, block_id=block_id)
         self.blocks.append(actions)
@@ -119,7 +123,6 @@ class Message(BaseModel):
         context_elements: List[Union[PlainText, MrkdwnText, Element]] = []
         for element in elements:
             if isinstance(element, str):
-                from .composition import PlainText
                 context_elements.append(PlainText.create(element))
             else:
                 context_elements.append(element)
@@ -190,13 +193,17 @@ class Message(BaseModel):
         self.blocks.append(video)
         return self
 
-    def add_rich_text(self, elements: List[Dict[str, Any]], block_id: Optional[str] = None) -> "Message":
+    def add_rich_text(
+        self, elements: List[Dict[str, Any]], block_id: Optional[str] = None
+    ) -> "Message":
         """Add a rich text block and return self for chaining."""
         rich_text = RichText.create(elements=elements, block_id=block_id)
         self.blocks.append(rich_text)
         return self
 
-    def set_response_type(self, response_type: Literal["in_channel", "ephemeral"]) -> "Message":
+    def set_response_type(
+        self, response_type: Literal["in_channel", "ephemeral"]
+    ) -> "Message":
         """Set response type and return self for chaining."""
         self.response_type = response_type
         return self
@@ -306,7 +313,9 @@ class Modal(BaseModel):
         block_id: Optional[str] = None,
     ) -> "Modal":
         """Add a section block and return self for chaining."""
-        section = Section.create(text=text, fields=fields, accessory=accessory, block_id=block_id)
+        section = Section.create(
+            text=text, fields=fields, accessory=accessory, block_id=block_id
+        )
         self.blocks.append(section)
         return self
 
@@ -333,7 +342,9 @@ class Modal(BaseModel):
         self.blocks.append(image)
         return self
 
-    def add_actions(self, elements: List[Element], block_id: Optional[str] = None) -> "Modal":
+    def add_actions(
+        self, elements: List[Element], block_id: Optional[str] = None
+    ) -> "Modal":
         """Add an actions block and return self for chaining."""
         actions = Actions.create(elements=elements, block_id=block_id)
         self.blocks.append(actions)
@@ -348,7 +359,6 @@ class Modal(BaseModel):
         context_elements: List[Union[PlainText, MrkdwnText, Element]] = []
         for element in elements:
             if isinstance(element, str):
-                from .composition import PlainText
                 context_elements.append(PlainText.create(element))
             else:
                 context_elements.append(element)
@@ -419,7 +429,9 @@ class Modal(BaseModel):
         self.blocks.append(video)
         return self
 
-    def add_rich_text(self, elements: List[Dict[str, Any]], block_id: Optional[str] = None) -> "Modal":
+    def add_rich_text(
+        self, elements: List[Dict[str, Any]], block_id: Optional[str] = None
+    ) -> "Modal":
         """Add a rich text block and return self for chaining."""
         rich_text = RichText.create(elements=elements, block_id=block_id)
         self.blocks.append(rich_text)
@@ -526,7 +538,9 @@ class HomeTab(BaseModel):
         block_id: Optional[str] = None,
     ) -> "HomeTab":
         """Add a section block and return self for chaining."""
-        section = Section.create(text=text, fields=fields, accessory=accessory, block_id=block_id)
+        section = Section.create(
+            text=text, fields=fields, accessory=accessory, block_id=block_id
+        )
         self.blocks.append(section)
         return self
 
@@ -553,7 +567,9 @@ class HomeTab(BaseModel):
         self.blocks.append(image)
         return self
 
-    def add_actions(self, elements: List[Element], block_id: Optional[str] = None) -> "HomeTab":
+    def add_actions(
+        self, elements: List[Element], block_id: Optional[str] = None
+    ) -> "HomeTab":
         """Add an actions block and return self for chaining."""
         actions = Actions.create(elements=elements, block_id=block_id)
         self.blocks.append(actions)
@@ -568,7 +584,6 @@ class HomeTab(BaseModel):
         context_elements: List[Union[PlainText, MrkdwnText, Element]] = []
         for element in elements:
             if isinstance(element, str):
-                from .composition import PlainText
                 context_elements.append(PlainText.create(element))
             else:
                 context_elements.append(element)
@@ -639,7 +654,9 @@ class HomeTab(BaseModel):
         self.blocks.append(video)
         return self
 
-    def add_rich_text(self, elements: List[Dict[str, Any]], block_id: Optional[str] = None) -> "HomeTab":
+    def add_rich_text(
+        self, elements: List[Dict[str, Any]], block_id: Optional[str] = None
+    ) -> "HomeTab":
         """Add a rich text block and return self for chaining."""
         rich_text = RichText.create(elements=elements, block_id=block_id)
         self.blocks.append(rich_text)

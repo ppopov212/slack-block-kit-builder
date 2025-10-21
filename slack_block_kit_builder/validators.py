@@ -41,7 +41,9 @@ class SlackConstraints:
     MAX_OPTION_DESCRIPTION_LENGTH = 75
 
 
-def validate_text_length(text: str, max_length: int = SlackConstraints.MAX_TEXT_LENGTH) -> str:
+def validate_text_length(
+    text: str, max_length: int = SlackConstraints.MAX_TEXT_LENGTH
+) -> str:
     """Validate text length against Slack constraints."""
     if len(text) > max_length:
         raise ValueError(f"Text length {len(text)} exceeds maximum of {max_length}")
@@ -66,7 +68,9 @@ def validate_action_id(action_id: str) -> str:
     return action_id
 
 
-def validate_url(url: str, max_length: int = SlackConstraints.MAX_IMAGE_URL_LENGTH) -> str:
+def validate_url(
+    url: str, max_length: int = SlackConstraints.MAX_IMAGE_URL_LENGTH
+) -> str:
     """Validate URL length."""
     if len(url) > max_length:
         raise ValueError(f"URL length {len(url)} exceeds maximum of {max_length}")
@@ -76,5 +80,7 @@ def validate_url(url: str, max_length: int = SlackConstraints.MAX_IMAGE_URL_LENG
 def validate_options_count(options: List[Any], max_count: int) -> List[Any]:
     """Validate number of options."""
     if len(options) > max_count:
-        raise ValueError(f"Number of options {len(options)} exceeds maximum of {max_count}")
+        raise ValueError(
+            f"Number of options {len(options)} exceeds maximum of {max_count}"
+        )
     return options
