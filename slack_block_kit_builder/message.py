@@ -71,8 +71,8 @@ class Message(BaseModel):
 
     def add_section(
         self,
-        text: Optional[str] = None,
-        fields: Optional[List[str]] = None,
+        text: Optional[Union[str, PlainText, MrkdwnText]] = None,
+        fields: Optional[List[Union[str, PlainText, MrkdwnText]]] = None,
         accessory: Optional[Element] = None,
         block_id: Optional[str] = None,
     ) -> "Message":
@@ -532,8 +532,8 @@ class HomeTab(BaseModel):
 
     def add_section(
         self,
-        text: Optional[str] = None,
-        fields: Optional[List[str]] = None,
+        text: Optional[Union[str, PlainText, MrkdwnText]] = None,
+        fields: Optional[List[Union[str, PlainText, MrkdwnText]]] = None,
         accessory: Optional[Element] = None,
         block_id: Optional[str] = None,
     ) -> "HomeTab":

@@ -14,7 +14,7 @@ from slack_block_kit_builder.blocks import (
     Section,
     Video,
 )
-from slack_block_kit_builder.composition import PlainText
+from slack_block_kit_builder.composition import PlainText, MrkdwnText
 from slack_block_kit_builder.elements import Button, PlainTextInput
 
 
@@ -54,6 +54,32 @@ class TestSection:
         assert section.text.text == "Updated text"
         assert section.text.type == "mrkdwn"
         assert section.block_id == "section_1"
+
+    def test_create_with_plain_text_object(self):
+        """Test creating section with PlainText object."""
+        plain_text = PlainText.create("Hello World")
+        section = Section.create(text=plain_text)
+        assert section.text == plain_text
+        assert section.text.text == "Hello World"
+
+    def test_create_with_mrkdwn_text_object(self):
+        """Test creating section with MrkdwnText object."""
+        mrkdwn_text = MrkdwnText.create("*Hello World*")
+        section = Section.create(text=mrkdwn_text)
+        assert section.text == mrkdwn_text
+        assert section.text.text == "*Hello World*"
+
+    def test_create_with_mixed_fields(self):
+        """Test creating section with mixed field types."""
+        plain_text = PlainText.create("Plain field")
+        mrkdwn_text = MrkdwnText.create("*Markdown field*")
+        fields = ["String field", plain_text, mrkdwn_text]
+        
+        section = Section.create(fields=fields)
+        assert len(section.fields) == 3
+        assert section.fields[0].text == "String field"  # Converted to PlainText
+        assert section.fields[1] == plain_text
+        assert section.fields[2] == mrkdwn_text
 
     def test_build(self):
         """Test building section to dict."""

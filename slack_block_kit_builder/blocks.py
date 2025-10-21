@@ -55,14 +55,31 @@ class Section(Block):
     @classmethod
     def create(
         cls,
-        text: Optional[str] = None,
-        fields: Optional[List[str]] = None,
+        text: Optional[Union[str, PlainText, MrkdwnText]] = None,
+        fields: Optional[List[Union[str, PlainText, MrkdwnText]]] = None,
         accessory: Optional[Element] = None,
         block_id: Optional[str] = None,
     ) -> "Section":
         """Create a section block with builder pattern."""
-        text_obj = PlainText.create(text) if text else None
-        field_objs = [PlainText.create(field) for field in fields] if fields else None
+        # Handle text parameter - if it's already a text object, use it; if it's a string, create PlainText
+        if text is None:
+            text_obj = None
+        elif isinstance(text, (PlainText, MrkdwnText)):
+            text_obj = text
+        else:
+            text_obj = PlainText.create(text)
+        
+        # Handle fields parameter - convert strings to PlainText, keep text objects as-is
+        if fields is None:
+            field_objs = None
+        else:
+            field_objs = []
+            for field in fields:
+                if isinstance(field, (PlainText, MrkdwnText)):
+                    field_objs.append(field)
+                else:
+                    field_objs.append(PlainText.create(field))
+        
         return cls(
             text=text_obj,
             fields=field_objs,
