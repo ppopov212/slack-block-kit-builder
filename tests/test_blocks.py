@@ -14,7 +14,7 @@ from slack_block_kit_builder.blocks import (
     Section,
     Video,
 )
-from slack_block_kit_builder.composition import PlainText, MrkdwnText
+from slack_block_kit_builder.composition import MrkdwnText, PlainText
 from slack_block_kit_builder.elements import Button, PlainTextInput
 
 
@@ -74,7 +74,7 @@ class TestSection:
         plain_text = PlainText.create("Plain field")
         mrkdwn_text = MrkdwnText.create("*Markdown field*")
         fields = ["String field", plain_text, mrkdwn_text]
-        
+
         section = Section.create(fields=fields)
         assert len(section.fields) == 3
         assert section.fields[0].text == "String field"  # Converted to PlainText

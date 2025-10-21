@@ -5,7 +5,7 @@ import pytest
 from slack_block_kit_builder.blocks import (
     Section,
 )
-from slack_block_kit_builder.composition import PlainText, MrkdwnText
+from slack_block_kit_builder.composition import MrkdwnText, PlainText
 from slack_block_kit_builder.elements import Button, PlainTextInput
 from slack_block_kit_builder.message import HomeTab, Message, Modal
 
@@ -67,12 +67,14 @@ class TestMessage:
         plain_text = PlainText.create("Plain field")
         mrkdwn_text = MrkdwnText.create("*Markdown field*")
         fields = ["String field", plain_text, mrkdwn_text]
-        
+
         message = Message.create().add_section(fields=fields)
         assert len(message.blocks) == 1
         assert message.blocks[0].type == "section"
         assert len(message.blocks[0].fields) == 3
-        assert message.blocks[0].fields[0].text == "String field"  # Converted to PlainText
+        assert (
+            message.blocks[0].fields[0].text == "String field"
+        )  # Converted to PlainText
         assert message.blocks[0].fields[1] == plain_text
         assert message.blocks[0].fields[2] == mrkdwn_text
 

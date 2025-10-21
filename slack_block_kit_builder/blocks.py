@@ -68,7 +68,7 @@ class Section(Block):
             text_obj = text
         else:
             text_obj = PlainText.create(text)
-        
+
         # Handle fields parameter - convert strings to PlainText, keep text objects as-is
         if fields is None:
             field_objs = None
@@ -79,7 +79,7 @@ class Section(Block):
                     field_objs.append(field)
                 else:
                     field_objs.append(PlainText.create(field))
-        
+
         return cls(
             text=text_obj,
             fields=field_objs,
