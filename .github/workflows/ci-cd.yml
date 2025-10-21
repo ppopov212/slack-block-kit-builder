@@ -115,6 +115,10 @@ jobs:
       with:
         version: "latest"
 
+    - name: Install build dependencies
+      run: |
+        uv pip install --system build twine
+
     - name: Publish to PyPI
       env:
         TWINE_USERNAME: __token__
