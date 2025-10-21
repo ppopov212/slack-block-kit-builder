@@ -2,7 +2,7 @@
 
 from typing import Any, Dict, List, Literal, Optional, Union
 
-from pydantic import BaseModel, validator
+from pydantic import BaseModel, field_validator
 
 from .composition import MrkdwnText, PlainText
 from .elements import Element
@@ -19,7 +19,8 @@ class Block(BaseModel):
     type: str
     block_id: Optional[str] = None
 
-    @validator("block_id")
+    @field_validator("block_id")
+    @classmethod
     def validate_block_id(cls, v: Optional[str]) -> Optional[str]:
         """Validate block ID length."""
         return validate_block_id(v)
@@ -121,7 +122,8 @@ class ImageBlock(Block):
     alt_text: str
     title: Optional[Union[PlainText, MrkdwnText]] = None
 
-    @validator("image_url")
+    @field_validator("image_url")
+    @classmethod
     def validate_image_url(cls, v: str) -> str:
         """Validate image URL length."""
         return validate_url(v)
@@ -176,7 +178,8 @@ class Actions(Block):
         self.block_id = block_id
         return self
 
-    @validator("elements")
+    @field_validator("elements")
+    @classmethod
     def validate_elements(cls, v: List[Element]) -> List[Element]:
         """Validate number of elements."""
         if len(v) > SlackConstraints.MAX_ELEMENTS_PER_ACTIONS:
@@ -214,7 +217,8 @@ class Context(Block):
         self.block_id = block_id
         return self
 
-    @validator("elements")
+    @field_validator("elements")
+    @classmethod
     def validate_elements(cls, v: List[Union[Element, PlainText, MrkdwnText]]) -> List[Union[Element, PlainText, MrkdwnText]]:
         """Validate number of elements."""
         if len(v) > SlackConstraints.MAX_ELEMENTS_PER_CONTEXT:
@@ -263,7 +267,8 @@ class Input(Block):
     optional: Optional[bool] = None
     dispatch_action: Optional[bool] = None
 
-    @validator("label")
+    @field_validator("label")
+    @classmethod
     def validate_label(cls, v: Union[PlainText, MrkdwnText]) -> Union[PlainText, MrkdwnText]:
         """Validate label length."""
         if len(v.text) > SlackConstraints.MAX_INPUT_LABEL_LENGTH:
@@ -272,7 +277,8 @@ class Input(Block):
             )
         return v
 
-    @validator("hint")
+    @field_validator("hint")
+    @classmethod
     def validate_hint(cls, v: Optional[Union[PlainText, MrkdwnText]]) -> Optional[Union[PlainText, MrkdwnText]]:
         """Validate hint length."""
         if v is not None and len(v.text) > SlackConstraints.MAX_INPUT_HINT_LENGTH:
@@ -405,26 +411,30 @@ class Video(Block):
     provider_name: Optional[str] = None
     provider_icon_url: Optional[str] = None
 
-    @validator("video_url")
+    @field_validator("video_url")
+    @classmethod
     def validate_video_url(cls, v: str) -> str:
         """Validate video URL length."""
         return validate_url(v, SlackConstraints.MAX_VIDEO_URL_LENGTH)
 
-    @validator("thumbnail_url")
+    @field_validator("thumbnail_url")
+    @classmethod
     def validate_thumbnail_url(cls, v: Optional[str]) -> Optional[str]:
         """Validate thumbnail URL length."""
         if v is not None:
             return validate_url(v)
         return v
 
-    @validator("title_url")
+    @field_validator("title_url")
+    @classmethod
     def validate_title_url(cls, v: Optional[str]) -> Optional[str]:
         """Validate title URL length."""
         if v is not None:
             return validate_url(v)
         return v
 
-    @validator("provider_icon_url")
+    @field_validator("provider_icon_url")
+    @classmethod
     def validate_provider_icon_url(cls, v: Optional[str]) -> Optional[str]:
         """Validate provider icon URL length."""
         if v is not None:

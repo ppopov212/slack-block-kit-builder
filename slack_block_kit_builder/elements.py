@@ -2,7 +2,7 @@
 
 from typing import Any, Dict, List, Literal, Optional, Union
 
-from pydantic import BaseModel, validator
+from pydantic import BaseModel, field_validator
 
 from .composition import (
     ConfirmationDialog,
@@ -43,12 +43,14 @@ class Button(Element):
     confirm: Optional[ConfirmationDialog] = None
     accessibility_label: Optional[str] = None
 
-    @validator("action_id")
+    @field_validator("action_id")
+    @classmethod
     def validate_action_id(cls, v: str) -> str:
         """Validate action ID length."""
         return validate_action_id(v)
 
-    @validator("url")
+    @field_validator("url")
+    @classmethod
     def validate_url(cls, v: Optional[str]) -> Optional[str]:
         """Validate URL length."""
         if v is not None:
@@ -128,12 +130,14 @@ class Checkboxes(Element):
     confirm: Optional[ConfirmationDialog] = None
     focus_on_load: Optional[bool] = None
 
-    @validator("action_id")
+    @field_validator("action_id")
+    @classmethod
     def validate_action_id(cls, v: str) -> str:
         """Validate action ID length."""
         return validate_action_id(v)
 
-    @validator("options")
+    @field_validator("options")
+    @classmethod
     def validate_options(cls, v: List[Option]) -> List[Option]:
         """Validate number of options."""
         return validate_options_count(v, SlackConstraints.MAX_OPTIONS_PER_SELECT)
@@ -184,7 +188,8 @@ class DatePicker(Element):
     confirm: Optional[ConfirmationDialog] = None
     focus_on_load: Optional[bool] = None
 
-    @validator("action_id")
+    @field_validator("action_id")
+    @classmethod
     def validate_action_id(cls, v: str) -> str:
         """Validate action ID length."""
         return validate_action_id(v)
@@ -241,7 +246,8 @@ class TimePicker(Element):
     confirm: Optional[ConfirmationDialog] = None
     focus_on_load: Optional[bool] = None
 
-    @validator("action_id")
+    @field_validator("action_id")
+    @classmethod
     def validate_action_id(cls, v: str) -> str:
         """Validate action ID length."""
         return validate_action_id(v)
@@ -297,7 +303,8 @@ class DatetimePicker(Element):
     confirm: Optional[ConfirmationDialog] = None
     focus_on_load: Optional[bool] = None
 
-    @validator("action_id")
+    @field_validator("action_id")
+    @classmethod
     def validate_action_id(cls, v: str) -> str:
         """Validate action ID length."""
         return validate_action_id(v)
@@ -347,7 +354,8 @@ class EmailInput(Element):
     dispatch_action_config: Optional[DispatchActionConfiguration] = None
     focus_on_load: Optional[bool] = None
 
-    @validator("action_id")
+    @field_validator("action_id")
+    @classmethod
     def validate_action_id(cls, v: str) -> str:
         """Validate action ID length."""
         return validate_action_id(v)
@@ -406,7 +414,8 @@ class NumberInput(Element):
     dispatch_action_config: Optional[DispatchActionConfiguration] = None
     focus_on_load: Optional[bool] = None
 
-    @validator("action_id")
+    @field_validator("action_id")
+    @classmethod
     def validate_action_id(cls, v: str) -> str:
         """Validate action ID length."""
         return validate_action_id(v)
@@ -480,7 +489,8 @@ class PlainTextInput(Element):
     dispatch_action_config: Optional[DispatchActionConfiguration] = None
     focus_on_load: Optional[bool] = None
 
-    @validator("action_id")
+    @field_validator("action_id")
+    @classmethod
     def validate_action_id(cls, v: str) -> str:
         """Validate action ID length."""
         return validate_action_id(v)
@@ -558,7 +568,8 @@ class URLInput(Element):
     dispatch_action_config: Optional[DispatchActionConfiguration] = None
     focus_on_load: Optional[bool] = None
 
-    @validator("action_id")
+    @field_validator("action_id")
+    @classmethod
     def validate_action_id(cls, v: str) -> str:
         """Validate action ID length."""
         return validate_action_id(v)
@@ -615,12 +626,14 @@ class RadioButtons(Element):
     confirm: Optional[ConfirmationDialog] = None
     focus_on_load: Optional[bool] = None
 
-    @validator("action_id")
+    @field_validator("action_id")
+    @classmethod
     def validate_action_id(cls, v: str) -> str:
         """Validate action ID length."""
         return validate_action_id(v)
 
-    @validator("options")
+    @field_validator("options")
+    @classmethod
     def validate_options(cls, v: List[Option]) -> List[Option]:
         """Validate number of options."""
         return validate_options_count(v, SlackConstraints.MAX_OPTIONS_PER_SELECT)
@@ -673,12 +686,14 @@ class StaticSelect(Element):
     confirm: Optional[ConfirmationDialog] = None
     focus_on_load: Optional[bool] = None
 
-    @validator("action_id")
+    @field_validator("action_id")
+    @classmethod
     def validate_action_id(cls, v: str) -> str:
         """Validate action ID length."""
         return validate_action_id(v)
 
-    @validator("options")
+    @field_validator("options")
+    @classmethod
     def validate_options(cls, v: Optional[List[Option]]) -> Optional[List[Option]]:
         """Validate number of options."""
         if v is not None:
@@ -747,7 +762,8 @@ class ExternalSelect(Element):
     confirm: Optional[ConfirmationDialog] = None
     focus_on_load: Optional[bool] = None
 
-    @validator("action_id")
+    @field_validator("action_id")
+    @classmethod
     def validate_action_id(cls, v: str) -> str:
         """Validate action ID length."""
         return validate_action_id(v)
@@ -805,7 +821,8 @@ class UsersSelect(Element):
     confirm: Optional[ConfirmationDialog] = None
     focus_on_load: Optional[bool] = None
 
-    @validator("action_id")
+    @field_validator("action_id")
+    @classmethod
     def validate_action_id(cls, v: str) -> str:
         """Validate action ID length."""
         return validate_action_id(v)
@@ -858,7 +875,8 @@ class ConversationsSelect(Element):
     confirm: Optional[ConfirmationDialog] = None
     focus_on_load: Optional[bool] = None
 
-    @validator("action_id")
+    @field_validator("action_id")
+    @classmethod
     def validate_action_id(cls, v: str) -> str:
         """Validate action ID length."""
         return validate_action_id(v)
@@ -923,7 +941,8 @@ class ChannelsSelect(Element):
     confirm: Optional[ConfirmationDialog] = None
     focus_on_load: Optional[bool] = None
 
-    @validator("action_id")
+    @field_validator("action_id")
+    @classmethod
     def validate_action_id(cls, v: str) -> str:
         """Validate action ID length."""
         return validate_action_id(v)
@@ -978,12 +997,14 @@ class MultiStaticSelect(Element):
     confirm: Optional[ConfirmationDialog] = None
     focus_on_load: Optional[bool] = None
 
-    @validator("action_id")
+    @field_validator("action_id")
+    @classmethod
     def validate_action_id(cls, v: str) -> str:
         """Validate action ID length."""
         return validate_action_id(v)
 
-    @validator("options")
+    @field_validator("options")
+    @classmethod
     def validate_options(cls, v: Optional[List[Option]]) -> Optional[List[Option]]:
         """Validate number of options."""
         if v is not None:
@@ -1063,7 +1084,8 @@ class MultiExternalSelect(Element):
     confirm: Optional[ConfirmationDialog] = None
     focus_on_load: Optional[bool] = None
 
-    @validator("action_id")
+    @field_validator("action_id")
+    @classmethod
     def validate_action_id(cls, v: str) -> str:
         """Validate action ID length."""
         return validate_action_id(v)
@@ -1126,12 +1148,14 @@ class OverflowMenu(Element):
     options: List[Option]
     confirm: Optional[ConfirmationDialog] = None
 
-    @validator("action_id")
+    @field_validator("action_id")
+    @classmethod
     def validate_action_id(cls, v: str) -> str:
         """Validate action ID length."""
         return validate_action_id(v)
 
-    @validator("options")
+    @field_validator("options")
+    @classmethod
     def validate_options(cls, v: List[Option]) -> List[Option]:
         """Validate number of options."""
         return validate_options_count(v, SlackConstraints.MAX_OPTIONS_PER_OVERFLOW)
@@ -1166,7 +1190,8 @@ class FileInput(Element):
     filetypes: Optional[List[str]] = None
     max_files: Optional[int] = None
 
-    @validator("action_id")
+    @field_validator("action_id")
+    @classmethod
     def validate_action_id(cls, v: str) -> str:
         """Validate action ID length."""
         return validate_action_id(v)
@@ -1209,7 +1234,8 @@ class RichTextInput(Element):
     dispatch_action_config: Optional[DispatchActionConfiguration] = None
     focus_on_load: Optional[bool] = None
 
-    @validator("action_id")
+    @field_validator("action_id")
+    @classmethod
     def validate_action_id(cls, v: str) -> str:
         """Validate action ID length."""
         return validate_action_id(v)
@@ -1266,7 +1292,8 @@ class Image(Element):
     image_url: str
     alt_text: str
 
-    @validator("image_url")
+    @field_validator("image_url")
+    @classmethod
     def validate_image_url(cls, v: str) -> str:
         """Validate image URL length."""
         return validate_url(v)
@@ -1297,7 +1324,8 @@ class MultiUsersSelect(Element):
     confirm: Optional[ConfirmationDialog] = None
     focus_on_load: Optional[bool] = None
 
-    @validator("action_id")
+    @field_validator("action_id")
+    @classmethod
     def validate_action_id(cls, v: str) -> str:
         """Validate action ID length."""
         return validate_action_id(v)
@@ -1358,7 +1386,8 @@ class MultiConversationsSelect(Element):
     confirm: Optional[ConfirmationDialog] = None
     focus_on_load: Optional[bool] = None
 
-    @validator("action_id")
+    @field_validator("action_id")
+    @classmethod
     def validate_action_id(cls, v: str) -> str:
         """Validate action ID length."""
         return validate_action_id(v)
@@ -1431,7 +1460,8 @@ class MultiChannelsSelect(Element):
     confirm: Optional[ConfirmationDialog] = None
     focus_on_load: Optional[bool] = None
 
-    @validator("action_id")
+    @field_validator("action_id")
+    @classmethod
     def validate_action_id(cls, v: str) -> str:
         """Validate action ID length."""
         return validate_action_id(v)

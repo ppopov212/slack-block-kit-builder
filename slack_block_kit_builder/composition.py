@@ -2,7 +2,7 @@
 
 from typing import Any, Dict, List, Literal, Optional, Union
 
-from pydantic import BaseModel, Field, validator
+from pydantic import BaseModel, Field, field_validator
 
 from .validators import (
     SlackConstraints,
@@ -17,7 +17,8 @@ class TextObject(BaseModel):
     type: str
     text: str
 
-    @validator("text")
+    @field_validator("text")
+    @classmethod
     def validate_text(cls, v: str) -> str:
         """Validate text length."""
         return validate_text_length(v)
@@ -124,7 +125,8 @@ class Option(BaseModel):
     description: Optional[Union[PlainText, MrkdwnText]] = None
     url: Optional[str] = None
 
-    @validator("value")
+    @field_validator("value")
+    @classmethod
     def validate_value(cls, v: str) -> str:
         """Validate option value length."""
         if len(v) > SlackConstraints.MAX_OPTION_VALUE_LENGTH:
@@ -133,7 +135,8 @@ class Option(BaseModel):
             )
         return v
 
-    @validator("url")
+    @field_validator("url")
+    @classmethod
     def validate_url(cls, v: Optional[str]) -> Optional[str]:
         """Validate URL length."""
         if v is not None:
@@ -185,7 +188,8 @@ class OptionGroup(BaseModel):
     label: Union[PlainText, MrkdwnText]
     options: List[Option]
 
-    @validator("options")
+    @field_validator("options")
+    @classmethod
     def validate_options(cls, v: List[Option]) -> List[Option]:
         """Validate number of options."""
         if len(v) > SlackConstraints.MAX_OPTIONS_PER_SELECT:

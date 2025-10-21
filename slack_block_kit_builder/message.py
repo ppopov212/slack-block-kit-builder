@@ -2,7 +2,7 @@
 
 from typing import Any, Dict, List, Literal, Optional, Union
 
-from pydantic import BaseModel, Field, validator
+from pydantic import BaseModel, Field, field_validator
 
 from .blocks import (
     Actions,
@@ -31,7 +31,8 @@ class Message(BaseModel):
     delete_original: Optional[bool] = None
     metadata: Optional[Dict[str, Any]] = None
 
-    @validator("blocks")
+    @field_validator("blocks")
+    @classmethod
     def validate_blocks(cls, v: List[Block]) -> List[Block]:
         """Validate number of blocks."""
         if len(v) > SlackConstraints.MAX_BLOCKS_PER_MESSAGE:
@@ -230,7 +231,8 @@ class Modal(BaseModel):
     notify_on_close: Optional[bool] = None
     external_id: Optional[str] = None
 
-    @validator("blocks")
+    @field_validator("blocks")
+    @classmethod
     def validate_blocks(cls, v: List[Block]) -> List[Block]:
         """Validate number of blocks."""
         if len(v) > SlackConstraints.MAX_BLOCKS_PER_MODAL:
@@ -468,7 +470,8 @@ class HomeTab(BaseModel):
     callback_id: Optional[str] = None
     external_id: Optional[str] = None
 
-    @validator("blocks")
+    @field_validator("blocks")
+    @classmethod
     def validate_blocks(cls, v: List[Block]) -> List[Block]:
         """Validate number of blocks."""
         if len(v) > SlackConstraints.MAX_BLOCKS_PER_HOME_TAB:
