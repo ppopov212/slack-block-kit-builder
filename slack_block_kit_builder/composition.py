@@ -125,16 +125,6 @@ class Option(BaseModel):
     description: Optional[Union[PlainText, MrkdwnText]] = None
     url: Optional[str] = None
 
-    @field_validator("value")
-    @classmethod
-    def validate_value(cls, v: str) -> str:
-        """Validate option value length."""
-        if len(v) > SlackConstraints.MAX_OPTION_VALUE_LENGTH:
-            raise ValueError(
-                f"Option value length {len(v)} exceeds maximum of {SlackConstraints.MAX_OPTION_VALUE_LENGTH}"
-            )
-        return v
-
     @field_validator("url")
     @classmethod
     def validate_url(cls, v: Optional[str]) -> Optional[str]:

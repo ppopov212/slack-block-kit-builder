@@ -37,7 +37,6 @@ class SlackConstraints:
 
     # Option limits
     MAX_OPTION_TEXT_LENGTH = 75
-    MAX_OPTION_VALUE_LENGTH = 75
     MAX_OPTION_DESCRIPTION_LENGTH = 75
 
 

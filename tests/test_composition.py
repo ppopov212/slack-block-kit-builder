@@ -189,14 +189,6 @@ class TestOption:
         }
         assert result == expected
 
-    def test_value_length_validation(self):
-        """Test option value length validation."""
-        long_value = "x" * 76
-        with pytest.raises(
-            ValueError, match="Option value length 76 exceeds maximum of 75"
-        ):
-            Option.create("Option 1", long_value)
-
 
 class TestOptionGroup:
     """Test OptionGroup composition object."""
