@@ -223,6 +223,57 @@ class Message(BaseModel):
         self.metadata = metadata
         return self
 
+    # Direct object methods
+    def add_section_block(self, section: Section) -> "Message":
+        """Add a section block directly and return self for chaining."""
+        self.blocks.append(section)
+        return self
+
+    def add_divider_block(self, divider: Divider) -> "Message":
+        """Add a divider block directly and return self for chaining."""
+        self.blocks.append(divider)
+        return self
+
+    def add_image_block(self, image: ImageBlock) -> "Message":
+        """Add an image block directly and return self for chaining."""
+        self.blocks.append(image)
+        return self
+
+    def add_actions_block(self, actions: Actions) -> "Message":
+        """Add an actions block directly and return self for chaining."""
+        self.blocks.append(actions)
+        return self
+
+    def add_context_block(self, context: Context) -> "Message":
+        """Add a context block directly and return self for chaining."""
+        self.blocks.append(context)
+        return self
+
+    def add_input_block(self, input_block: Input) -> "Message":
+        """Add an input block directly and return self for chaining."""
+        self.blocks.append(input_block)
+        return self
+
+    def add_file_block(self, file_block: File) -> "Message":
+        """Add a file block directly and return self for chaining."""
+        self.blocks.append(file_block)
+        return self
+
+    def add_header_block(self, header: Header) -> "Message":
+        """Add a header block directly and return self for chaining."""
+        self.blocks.append(header)
+        return self
+
+    def add_video_block(self, video: Video) -> "Message":
+        """Add a video block directly and return self for chaining."""
+        self.blocks.append(video)
+        return self
+
+    def add_rich_text_block(self, rich_text: RichText) -> "Message":
+        """Add a rich text block directly and return self for chaining."""
+        self.blocks.append(rich_text)
+        return self
+
 
 class Modal(BaseModel):
     """Modal builder for Slack Block Kit."""
@@ -472,6 +523,57 @@ class Modal(BaseModel):
         self.external_id = external_id
         return self
 
+    # Direct object methods
+    def add_section_block(self, section: Section) -> "Modal":
+        """Add a section block directly and return self for chaining."""
+        self.blocks.append(section)
+        return self
+
+    def add_divider_block(self, divider: Divider) -> "Modal":
+        """Add a divider block directly and return self for chaining."""
+        self.blocks.append(divider)
+        return self
+
+    def add_image_block(self, image: ImageBlock) -> "Modal":
+        """Add an image block directly and return self for chaining."""
+        self.blocks.append(image)
+        return self
+
+    def add_actions_block(self, actions: Actions) -> "Modal":
+        """Add an actions block directly and return self for chaining."""
+        self.blocks.append(actions)
+        return self
+
+    def add_context_block(self, context: Context) -> "Modal":
+        """Add a context block directly and return self for chaining."""
+        self.blocks.append(context)
+        return self
+
+    def add_input_block(self, input_block: Input) -> "Modal":
+        """Add an input block directly and return self for chaining."""
+        self.blocks.append(input_block)
+        return self
+
+    def add_file_block(self, file_block: File) -> "Modal":
+        """Add a file block directly and return self for chaining."""
+        self.blocks.append(file_block)
+        return self
+
+    def add_header_block(self, header: Header) -> "Modal":
+        """Add a header block directly and return self for chaining."""
+        self.blocks.append(header)
+        return self
+
+    def add_video_block(self, video: Video) -> "Modal":
+        """Add a video block directly and return self for chaining."""
+        self.blocks.append(video)
+        return self
+
+    def add_rich_text_block(self, rich_text: RichText) -> "Modal":
+        """Add a rich text block directly and return self for chaining."""
+        self.blocks.append(rich_text)
+        return self
+
 
 class HomeTab(BaseModel):
     """Home tab builder for Slack Block Kit."""
@@ -675,4 +777,55 @@ class HomeTab(BaseModel):
     def set_external_id(self, external_id: str) -> "HomeTab":
         """Set external ID and return self for chaining."""
         self.external_id = external_id
+        return self
+
+    # Direct object methods
+    def add_section_block(self, section: Section) -> "HomeTab":
+        """Add a section block directly and return self for chaining."""
+        self.blocks.append(section)
+        return self
+
+    def add_divider_block(self, divider: Divider) -> "HomeTab":
+        """Add a divider block directly and return self for chaining."""
+        self.blocks.append(divider)
+        return self
+
+    def add_image_block(self, image: ImageBlock) -> "HomeTab":
+        """Add an image block directly and return self for chaining."""
+        self.blocks.append(image)
+        return self
+
+    def add_actions_block(self, actions: Actions) -> "HomeTab":
+        """Add an actions block directly and return self for chaining."""
+        self.blocks.append(actions)
+        return self
+
+    def add_context_block(self, context: Context) -> "HomeTab":
+        """Add a context block directly and return self for chaining."""
+        self.blocks.append(context)
+        return self
+
+    def add_input_block(self, input_block: Input) -> "HomeTab":
+        """Add an input block directly and return self for chaining."""
+        self.blocks.append(input_block)
+        return self
+
+    def add_file_block(self, file_block: File) -> "HomeTab":
+        """Add a file block directly and return self for chaining."""
+        self.blocks.append(file_block)
+        return self
+
+    def add_header_block(self, header: Header) -> "HomeTab":
+        """Add a header block directly and return self for chaining."""
+        self.blocks.append(header)
+        return self
+
+    def add_video_block(self, video: Video) -> "HomeTab":
+        """Add a video block directly and return self for chaining."""
+        self.blocks.append(video)
+        return self
+
+    def add_rich_text_block(self, rich_text: RichText) -> "HomeTab":
+        """Add a rich text block directly and return self for chaining."""
+        self.blocks.append(rich_text)
         return self

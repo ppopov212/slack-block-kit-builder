@@ -22,6 +22,7 @@ A comprehensive Python package for building Slack Block Kit structures with dedi
 - `.create()` - Initialize objects
 - `.build()` - Generate JSON output
 - `.add_*()` - Add blocks/elements (Message builder)
+- `.add_*_block()` - Add pre-created block objects directly
 - `.set_*()` - Configure properties (Builder pattern)
 
 ### 🤖 AI Agent Decision Tree
@@ -65,6 +66,7 @@ Start with Modal.create(title)
 - **🔒 Type Safety**: Full pydantic validation with comprehensive type hints
 - **📦 Complete Coverage**: All Slack Block Kit blocks, elements, and composition objects
 - **🔄 Easy Migration**: Clear 1:1 mapping to Slack Block Kit JSON structure
+- **🎯 Direct Object Methods**: Add pre-created blocks directly for better flexibility
 - **✨ Code Quality**: Ruff linting, mypy type checking, comprehensive test coverage
 - **📚 Rich Documentation**: Extensive examples, API reference, and migration guides
 - **⚡ Performance**: Optimized for both development and production use
@@ -239,6 +241,59 @@ message = (
 )
 ```
 
+### Direct Object Methods
+
+For more flexibility, you can create blocks independently and add them directly:
+
+```python
+from slack_blocksmith import Message, Section, Divider, Header, Actions, Button, PlainText
+
+# Create blocks independently
+section = Section.create(
+    text=PlainText.create("Hello World!"),
+    block_id="section1"
+)
+
+divider = Divider.create(block_id="divider1")
+
+header = Header.create(
+    text="My Header",
+    block_id="header1"
+)
+
+button = Button.create("Click Me", "btn_click")
+actions = Actions.create(
+    elements=[button],
+    block_id="actions1"
+)
+
+# Add blocks directly to message
+message = (Message.create()
+           .add_section_block(section)
+           .add_divider_block(divider)
+           .add_header_block(header)
+           .add_actions_block(actions)
+           .build())
+```
+
+**Available Direct Object Methods:**
+- `.add_section_block(section: Section)` - Add pre-created Section block
+- `.add_divider_block(divider: Divider)` - Add pre-created Divider block
+- `.add_image_block(image: ImageBlock)` - Add pre-created ImageBlock
+- `.add_actions_block(actions: Actions)` - Add pre-created Actions block
+- `.add_context_block(context: Context)` - Add pre-created Context block
+- `.add_input_block(input_block: Input)` - Add pre-created Input block
+- `.add_file_block(file_block: File)` - Add pre-created File block
+- `.add_header_block(header: Header)` - Add pre-created Header block
+- `.add_video_block(video: Video)` - Add pre-created Video block
+- `.add_rich_text_block(rich_text: RichText)` - Add pre-created RichText block
+
+**Benefits of Direct Object Methods:**
+- **Reusability**: Create blocks once, use in multiple messages
+- **Better Organization**: Separate block creation from message building
+- **Type Safety**: Direct object methods provide better type checking
+- **Flexibility**: Mix and match different approaches as needed
+
 ### Modal
 
 ```python
@@ -376,6 +431,7 @@ message = (
 - `.add_video()` - Add video display blocks
 - `.add_rich_text()` - Add rich text formatting
 - `.add_block()` - Add any custom block
+- `.add_*_block()` - Add pre-created block objects directly
 - `.build()` - Return complete message dictionary
 
 #### `Modal`
@@ -789,6 +845,59 @@ conv_filter = (
 ```
 
 ## 🎯 Real-World Examples
+
+### 🎯 Direct Object Methods Example
+Using pre-created blocks for better organization and reusability.
+
+```python
+from slack_blocksmith import Message, Section, Divider, Header, Actions, Button, PlainText, MrkdwnText
+
+# Create reusable blocks
+def create_header_block(title: str) -> Header:
+    return Header.create(title, block_id=f"header_{title.lower().replace(' ', '_')}")
+
+def create_section_block(text: str, block_id: str) -> Section:
+    return Section.create(
+        text=MrkdwnText.create(text),
+        block_id=block_id
+    )
+
+def create_actions_block(buttons: list, block_id: str) -> Actions:
+    return Actions.create(
+        elements=buttons,
+        block_id=block_id
+    )
+
+# Create blocks independently
+header = create_header_block("Project Status")
+divider = Divider.create(block_id="divider1")
+
+status_section = create_section_block(
+    "**Current Status:**\n• 3 tasks in progress\n• 2 pending review\n• 1 completed today",
+    "status_section"
+)
+
+progress_section = create_section_block(
+    "**Progress:**\n• Sprint 1: 85% complete\n• Sprint 2: 45% complete",
+    "progress_section"
+)
+
+# Create action buttons
+approve_btn = Button.create("✅ Approve", "btn_approve").style("primary")
+reject_btn = Button.create("❌ Reject", "btn_reject").style("danger")
+info_btn = Button.create("ℹ️ More Info", "btn_info")
+
+actions = create_actions_block([approve_btn, reject_btn, info_btn], "actions1")
+
+# Build message using direct object methods
+message = (Message.create()
+           .add_header_block(header)
+           .add_divider_block(divider)
+           .add_section_block(status_section)
+           .add_section_block(progress_section)
+           .add_actions_block(actions)
+           .build())
+```
 
 ### 📝 Form Message
 Complete form with various input types and validation.
