@@ -1,6 +1,6 @@
 """Basic message example using slack-block-kit-builder."""
 
-from slack_block_kit_builder import Button, Message
+from slack_blocksmith import Button, Message
 
 
 def create_basic_message():
@@ -40,7 +40,7 @@ def create_interactive_message():
 
 def create_form_message():
     """Create a message with form elements."""
-    from slack_block_kit_builder.elements import (
+    from slack_blocksmith.elements import (
         Checkboxes,
         DatePicker,
         Option,

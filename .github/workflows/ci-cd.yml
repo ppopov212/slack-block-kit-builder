@@ -131,4 +131,4 @@ jobs:
         python -m venv test_install
         source test_install/bin/activate
         pip install slack-blocksmith
-        python -c "from slack_block_kit_builder import Message; print('✅ Package installed successfully!')"
+        python -c "from slack_blocksmith import Message; print('✅ Package installed successfully!')"

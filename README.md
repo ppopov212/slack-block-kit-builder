@@ -130,7 +130,7 @@ message = {
 ### After: Builder Pattern
 ```python
 # Clean, type-safe, maintainable
-from slack_block_kit_builder import Message, Section, Button, MrkdwnText
+from slack_blocksmith import Message, Section, Button, MrkdwnText
 
 message = (
     Message.create()
@@ -149,10 +149,10 @@ message = (
 ### Common Import Patterns
 ```python
 # Basic imports for most use cases
-from slack_block_kit_builder import Message, Section, Button, PlainText
+from slack_blocksmith import Message, Section, Button, PlainText
 
 # Full imports for complex applications
-from slack_block_kit_builder import (
+from slack_blocksmith import (
     Message, Modal, HomeTab,
     Section, Actions, Context, Input, Header,
     Button, StaticSelect, PlainTextInput, DatePicker,
@@ -202,7 +202,7 @@ Button.create("Text", "btn").style("primary")  # or "danger"
 ### Basic Message
 
 ```python
-from slack_block_kit_builder import Message, Section, Button, PlainText
+from slack_blocksmith import Message, Section, Button, PlainText
 
 message = (
     Message.create()
@@ -220,7 +220,7 @@ message = (
 ### Interactive Message
 
 ```python
-from slack_block_kit_builder import Message, Button, StaticSelect, Option
+from slack_blocksmith import Message, Button, StaticSelect, Option
 
 message = (
     Message.create()
@@ -242,7 +242,7 @@ message = (
 ### Modal
 
 ```python
-from slack_block_kit_builder import Modal, PlainTextInput, DatePicker, StaticSelect, Option
+from slack_blocksmith import Modal, PlainTextInput, DatePicker, StaticSelect, Option
 
 modal = (
     Modal.create("User Registration")
@@ -353,7 +353,7 @@ Composition Objects:
 The primary class for building Slack messages with blocks.
 
 ```python
-from slack_block_kit_builder import Message
+from slack_blocksmith import Message
 
 message = (
     Message.create()
@@ -382,7 +382,7 @@ message = (
 Build interactive modals for user input.
 
 ```python
-from slack_block_kit_builder import Modal, PlainTextInput, DatePicker
+from slack_blocksmith import Modal, PlainTextInput, DatePicker
 
 modal = (
     Modal.create("User Registration")
@@ -407,7 +407,7 @@ modal = (
 Build home tab interfaces for Slack apps.
 
 ```python
-from slack_block_kit_builder import HomeTab
+from slack_blocksmith import HomeTab
 
 home_tab = (
     HomeTab.create()
@@ -423,7 +423,7 @@ home_tab = (
 Text blocks with optional fields and accessories.
 
 ```python
-from slack_block_kit_builder import Section, Button, MrkdwnText
+from slack_blocksmith import Section, Button, MrkdwnText
 
 section = (
     Section.create()
@@ -438,7 +438,7 @@ section = (
 Container for interactive elements (buttons, selects, etc.).
 
 ```python
-from slack_block_kit_builder import Actions, Button, StaticSelect
+from slack_blocksmith import Actions, Button, StaticSelect
 
 actions = (
     Actions.create()
@@ -452,7 +452,7 @@ actions = (
 Small text/images at the bottom of messages.
 
 ```python
-from slack_block_kit_builder import Context, PlainText, Image
+from slack_blocksmith import Context, PlainText, Image
 
 context = (
     Context.create()
@@ -466,7 +466,7 @@ context = (
 Form input blocks with labels and validation.
 
 ```python
-from slack_block_kit_builder import Input, PlainTextInput
+from slack_blocksmith import Input, PlainTextInput
 
 input_block = (
     Input.create("Full Name")
@@ -481,7 +481,7 @@ input_block = (
 Large header text blocks.
 
 ```python
-from slack_block_kit_builder import Header
+from slack_blocksmith import Header
 
 header = (
     Header.create("Important Announcement")
@@ -493,7 +493,7 @@ header = (
 Display image blocks.
 
 ```python
-from slack_block_kit_builder import Image
+from slack_blocksmith import Image
 
 image = (
     Image.create("https://example.com/image.jpg", "Image description")
@@ -506,7 +506,7 @@ image = (
 Display video blocks.
 
 ```python
-from slack_block_kit_builder import Video
+from slack_blocksmith import Video
 
 video = (
     Video.create("https://example.com/video.mp4", "Video description")
@@ -520,7 +520,7 @@ video = (
 Display file blocks.
 
 ```python
-from slack_block_kit_builder import File
+from slack_blocksmith import File
 
 file = (
     File.create("https://example.com/document.pdf")
@@ -534,7 +534,7 @@ file = (
 Rich text formatting blocks.
 
 ```python
-from slack_block_kit_builder import RichText
+from slack_blocksmith import RichText
 
 rich_text = (
     RichText.create()
@@ -550,7 +550,7 @@ rich_text = (
 Interactive buttons with various styles and confirmations.
 
 ```python
-from slack_block_kit_builder import Button, ConfirmationDialog
+from slack_blocksmith import Button, ConfirmationDialog
 
 # Basic button
 button = Button.create("Click Me", "btn_1").build()
@@ -573,7 +573,7 @@ button = (
 Various input field types for forms.
 
 ```python
-from slack_block_kit_builder import (
+from slack_blocksmith import (
     PlainTextInput, EmailInput, NumberInput, 
     URLInput, DatePicker, TimePicker, DatetimePicker
 )
@@ -616,7 +616,7 @@ date_picker = (
 Various select menu types for user choices.
 
 ```python
-from slack_block_kit_builder import (
+from slack_blocksmith import (
     StaticSelect, ExternalSelect, UsersSelect, 
     ConversationsSelect, ChannelsSelect, Option, OptionGroup
 )
@@ -656,7 +656,7 @@ user_select = (
 #### Other Elements
 
 ```python
-from slack_block_kit_builder import (
+from slack_blocksmith import (
     Checkboxes, RadioButtons, OverflowMenu, 
     FileInput, RichTextInput
 )
@@ -705,7 +705,7 @@ file_input = (
 Text formatting and display objects.
 
 ```python
-from slack_block_kit_builder import PlainText, MrkdwnText
+from slack_blocksmith import PlainText, MrkdwnText
 
 # Plain text
 plain_text = (
@@ -726,7 +726,7 @@ markdown_text = (
 Selection options for menus and selects.
 
 ```python
-from slack_block_kit_builder import Option, OptionGroup
+from slack_blocksmith import Option, OptionGroup
 
 # Single option
 option = (
@@ -750,7 +750,7 @@ option_group = (
 Confirmation dialogs for destructive actions.
 
 ```python
-from slack_block_kit_builder import ConfirmationDialog
+from slack_blocksmith import ConfirmationDialog
 
 confirm_dialog = (
     ConfirmationDialog.create(
@@ -768,7 +768,7 @@ confirm_dialog = (
 Filters for conversation and user selection.
 
 ```python
-from slack_block_kit_builder import Filter, ConversationFilter
+from slack_blocksmith import Filter, ConversationFilter
 
 # Basic filter
 filter_obj = (
@@ -794,7 +794,7 @@ conv_filter = (
 Complete form with various input types and validation.
 
 ```python
-from slack_block_kit_builder import (
+from slack_blocksmith import (
     Message, PlainTextInput, EmailInput, NumberInput, 
     DatePicker, StaticSelect, Option, Checkboxes
 )
@@ -847,7 +847,7 @@ message = (
 Complex approval system with confirmation dialogs and status tracking.
 
 ```python
-from slack_block_kit_builder import (
+from slack_blocksmith import (
     Message, Button, ConfirmationDialog, 
     StaticSelect, Option, Context
 )
@@ -921,7 +921,7 @@ message = (
 Comprehensive home tab with multiple sections and interactive elements.
 
 ```python
-from slack_block_kit_builder import (
+from slack_blocksmith import (
     HomeTab, Section, Actions, Button, 
     StaticSelect, Option, Context, Image
 )
@@ -969,7 +969,7 @@ home_tab = (
 Complex modal with multiple input types and validation.
 
 ```python
-from slack_block_kit_builder import (
+from slack_blocksmith import (
     Modal, PlainTextInput, EmailInput, NumberInput,
     DatePicker, TimePicker, StaticSelect, MultiStaticSelect,
     Checkboxes, RadioButtons, Option, OptionGroup
@@ -1063,7 +1063,7 @@ modal = (
 Message with rich formatting and data presentation.
 
 ```python
-from slack_block_kit_builder import (
+from slack_blocksmith import (
     Message, Section, Context, Image, 
     Button, StaticSelect, Option
 )
@@ -1155,7 +1155,7 @@ message = {
 ### After: Clean Builder Pattern
 ```python
 # Type-safe, maintainable, validated
-from slack_block_kit_builder import Message, MrkdwnText, Button
+from slack_blocksmith import Message, MrkdwnText, Button
 
 message = (
     Message.create()
@@ -1218,14 +1218,14 @@ element.style("primary")  # This won't work
 ### Import Resolution
 ```python
 # ✅ Correct: Import from main package
-from slack_block_kit_builder import Message, Button
+from slack_blocksmith import Message, Button
 
 # ✅ Correct: Import specific classes
-from slack_block_kit_builder import Message
-from slack_block_kit_builder import Button
+from slack_blocksmith import Message
+from slack_blocksmith import Button
 
 # ❌ Wrong: Import from submodules (not recommended)
-from slack_block_kit_builder.message import Message
+from slack_blocksmith.message import Message
 ```
 
 ### JSON Output Format
@@ -1245,7 +1245,7 @@ slack_client.chat_postMessage(
 
 ### Custom Validation
 ```python
-from slack_block_kit_builder import Message, PlainTextInput, validator
+from slack_blocksmith import Message, PlainTextInput, validator
 from pydantic import BaseModel
 
 class CustomInput(PlainTextInput):
@@ -1264,7 +1264,7 @@ message = (
 
 ### Dynamic Content Generation
 ```python
-from slack_block_kit_builder import Message, Section, Button, Option, StaticSelect
+from slack_blocksmith import Message, Section, Button, Option, StaticSelect
 
 def create_task_message(tasks):
     message = Message.create().add_header("Task Dashboard")
@@ -1284,7 +1284,7 @@ def create_task_message(tasks):
 
 ### Error Handling
 ```python
-from slack_block_kit_builder import Message, Button
+from slack_blocksmith import Message, Button
 from pydantic import ValidationError
 
 try:
@@ -1306,7 +1306,7 @@ except ValidationError as e:
 ### Unit Testing
 ```python
 import pytest
-from slack_block_kit_builder import Message, Button
+from slack_blocksmith import Message, Button
 
 def test_message_creation():
     message = (
@@ -1382,13 +1382,13 @@ pre-commit install
 ruff check .
 
 # Run type checking
-mypy slack_block_kit_builder/
+mypy slack_blocksmith/
 
 # Run tests
 pytest
 
 # Run tests with coverage
-pytest --cov=slack_block_kit_builder --cov-report=html
+pytest --cov=slack_blocksmith --cov-report=html
 
 # Format code
 ruff format .
@@ -1397,7 +1397,7 @@ ruff format .
 ### Project Structure
 ```
 slack-block-kit-builder/
-├── slack_block_kit_builder/          # Main package
+├── slack_blocksmith/          # Main package
 │   ├── __init__.py                   # Package exports
 │   ├── composition.py               # Text, Option, Dialog objects
 │   ├── elements.py                  # Interactive elements
@@ -1441,7 +1441,7 @@ git checkout -b feature/amazing-feature
 ### 4. Run Quality Checks
 ```bash
 ruff check .
-mypy slack_block_kit_builder/
+mypy slack_blocksmith/
 pytest
 ```
 

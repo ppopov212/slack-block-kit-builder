@@ -1,7 +1,7 @@
 """Modal example using slack-block-kit-builder."""
 
-from slack_block_kit_builder import Button, ConfirmationDialog, Modal
-from slack_block_kit_builder.elements import (
+from slack_blocksmith import Button, ConfirmationDialog, Modal
+from slack_blocksmith.elements import (
     Checkboxes,
     DatePicker,
     EmailInput,

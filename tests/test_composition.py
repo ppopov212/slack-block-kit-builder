@@ -2,7 +2,7 @@
 
 import pytest
 
-from slack_block_kit_builder.composition import (
+from slack_blocksmith.composition import (
     ConfirmationDialog,
     ConversationFilter,
     DispatchActionConfiguration,

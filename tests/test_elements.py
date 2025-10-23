@@ -2,11 +2,11 @@
 
 import pytest
 
-from slack_block_kit_builder.composition import (
+from slack_blocksmith.composition import (
     ConfirmationDialog,
     Option,
 )
-from slack_block_kit_builder.elements import (
+from slack_blocksmith.elements import (
     Button,
     ChannelsSelect,
     Checkboxes,
@@ -582,7 +582,7 @@ class TestConversationsSelect:
 
     def test_builder_pattern(self):
         """Test builder pattern for conversations select."""
-        from slack_block_kit_builder.composition import Filter
+        from slack_blocksmith.composition import Filter
 
         filter_obj = Filter.create(include=["public"])
         select = ConversationsSelect.create("conversations_1", "Choose conversation")
@@ -762,7 +762,7 @@ class TestMultiConversationsSelect:
 
     def test_builder_pattern(self):
         """Test builder pattern for multi conversations select."""
-        from slack_block_kit_builder.composition import Filter
+        from slack_blocksmith.composition import Filter
 
         filter_obj = Filter.create(include=["public"])
         select = MultiConversationsSelect.create(

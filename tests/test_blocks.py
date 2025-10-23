@@ -2,7 +2,7 @@
 
 import pytest
 
-from slack_block_kit_builder.blocks import (
+from slack_blocksmith.blocks import (
     Actions,
     Context,
     Divider,
@@ -14,8 +14,8 @@ from slack_block_kit_builder.blocks import (
     Section,
     Video,
 )
-from slack_block_kit_builder.composition import MrkdwnText, PlainText
-from slack_block_kit_builder.elements import Button, PlainTextInput
+from slack_blocksmith.composition import MrkdwnText, PlainText
+from slack_blocksmith.elements import Button, PlainTextInput
 
 
 class TestSection:

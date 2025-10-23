@@ -1,13 +1,13 @@
 """Interactive message example using slack-block-kit-builder."""
 
-from slack_block_kit_builder import (
+from slack_blocksmith import (
     Button,
     ConfirmationDialog,
     Message,
     Option,
     OverflowMenu,
 )
-from slack_block_kit_builder.elements import (
+from slack_blocksmith.elements import (
     DatePicker,
     MultiStaticSelect,
     NumberInput,
