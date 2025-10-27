@@ -44,11 +44,6 @@ class Message(BaseModel):
 
     def build(self) -> Dict[str, Any]:
         """Build the message as a dictionary."""
-        # Validate block count before building
-        if len(self.blocks) > SlackConstraints.MAX_BLOCKS_PER_MESSAGE:
-            raise ValueError(
-                f"Number of blocks {len(self.blocks)} exceeds maximum of {SlackConstraints.MAX_BLOCKS_PER_MESSAGE}"
-            )
         result = {"blocks": [block.build() for block in self.blocks]}
         if self.response_type is not None:
             result["response_type"] = self.response_type  # type: ignore[assignment]

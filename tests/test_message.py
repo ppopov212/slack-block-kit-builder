@@ -202,16 +202,6 @@ class TestMessage:
         }
         assert result == expected
 
-    def test_blocks_count_validation(self):
-        """Test message blocks count validation."""
-        message = Message.create()
-        for i in range(51):  # Exceeds MAX_BLOCKS_PER_MESSAGE
-            message.add_section(f"Section {i}")
-        with pytest.raises(
-            ValueError, match="Number of blocks 51 exceeds maximum of 50"
-        ):
-            message.build()
-
 
 class TestModal:
     """Test Modal builder."""
