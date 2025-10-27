@@ -24,6 +24,7 @@ A comprehensive Python package for building Slack Block Kit structures with dedi
 - `.add_*()` - Add blocks/elements (Message builder)
 - `.add_*_block()` - Add pre-created block objects directly
 - `.set_*()` - Configure properties (Builder pattern)
+- `.from_payload()` - Parse existing Slack messages from JSON
 
 ### 🤖 AI Agent Decision Tree
 
@@ -60,6 +61,14 @@ Start with Modal.create(title)
 └── Add metadata → .callback_id(id).private_metadata(data)
 ```
 
+**Need to parse existing messages?**
+```
+Parse from JSON → Message.from_payload(payload)
+├── Modify content → .add_section(text)
+├── Update buttons → .add_actions([Button.create(...)])
+└── Build back → .build() for Slack API
+```
+
 ## 🚀 Features
 
 - **🏗️ Builder Pattern**: Fluent method chaining for intuitive API design
@@ -67,6 +76,7 @@ Start with Modal.create(title)
 - **📦 Complete Coverage**: All Slack Block Kit blocks, elements, and composition objects
 - **🔄 Easy Migration**: Clear 1:1 mapping to Slack Block Kit JSON structure
 - **🎯 Direct Object Methods**: Add pre-created blocks directly for better flexibility
+- **🔄 Message Parsing**: Parse existing Slack messages from JSON payloads (`from_payload`)
 - **✨ Code Quality**: Ruff linting, mypy type checking, comprehensive test coverage
 - **📚 Rich Documentation**: Extensive examples, API reference, and migration guides
 - **⚡ Performance**: Optimized for both development and production use
@@ -293,6 +303,85 @@ message = (Message.create()
 - **Better Organization**: Separate block creation from message building
 - **Type Safety**: Direct object methods provide better type checking
 - **Flexibility**: Mix and match different approaches as needed
+
+### 🔄 Parsing Existing Messages (`from_payload`)
+
+Parse existing Slack messages from JSON payloads and modify them:
+
+```python
+from slack_blocksmith import Message, MrkdwnText
+
+# Parse a message from Slack payload JSON
+slack_payload = {
+    "blocks": [
+        {
+            "type": "header",
+            "text": {
+                "type": "plain_text",
+                "text": "Integration Test Results"
+            }
+        },
+        {
+            "type": "section",
+            "text": {
+                "type": "mrkdwn",
+                "text": "*Status*: Running tests..."
+            },
+            "accessory": {
+                "type": "button",
+                "text": {
+                    "type": "plain_text",
+                    "text": "View Details"
+                },
+                "action_id": "view_details",
+                "url": "https://example.com"
+            }
+        }
+    ]
+}
+
+# Parse the payload into a Message object
+message = Message.from_payload(slack_payload)
+
+# Modify the message
+updated_message = message.add_section(
+    text=MrkdwnText.create("*New*: Tests completed successfully!")
+)
+
+# Build back to dictionary for Slack API
+updated_payload = updated_message.build()
+```
+
+**Use Cases:**
+- **Action Handlers**: Parse incoming messages from button clicks, form submissions
+- **Message Updates**: Modify existing messages based on user interactions
+- **Workflow Integration**: Process messages from external systems
+- **Testing**: Parse and validate message structures
+
+**Supported Input Formats:**
+```python
+# From dictionary
+message = Message.from_payload({"blocks": [...]})
+
+# From JSON string
+message = Message.from_payload('{"blocks": [...]}')
+
+# With message properties
+message = Message.from_payload({
+    "blocks": [...],
+    "response_type": "ephemeral",
+    "replace_original": True,
+    "metadata": {"key": "value"}
+})
+```
+
+**Error Handling:**
+```python
+try:
+    message = Message.from_payload(invalid_payload)
+except ValueError as e:
+    print(f"Invalid payload: {e}")
+```
 
 ### Modal
 
@@ -897,6 +986,71 @@ message = (Message.create()
            .add_section_block(progress_section)
            .add_actions_block(actions)
            .build())
+```
+
+### 🔄 Action Handler with Message Parsing
+Handling Slack interactions by parsing and modifying existing messages.
+
+```python
+from slack_blocksmith import Message, MrkdwnText, Button
+from slack_sdk import WebClient
+
+def handle_button_click(payload: dict, slack_client: WebClient):
+    """Handle button click by parsing and updating the message."""
+    
+    # Parse the original message from Slack payload
+    original_message = Message.from_payload(payload['message'])
+    
+    # Extract action information
+    action_id = payload['actions'][0]['action_id']
+    user_id = payload['user']['id']
+    
+    # Modify the message based on the action
+    if action_id == 'approve_task':
+        # Add approval confirmation
+        updated_message = original_message.add_section(
+            text=MrkdwnText.create(f"✅ *Approved by* <@{user_id}>"),
+            block_id="approval_status"
+        )
+        
+        # Update the button to show it was clicked
+        # (In practice, you'd modify the existing button or remove it)
+        updated_message = updated_message.add_section(
+            text=MrkdwnText.create("Task has been approved and moved to next stage."),
+            block_id="status_update"
+        )
+        
+    elif action_id == 'reject_task':
+        # Add rejection reason
+        updated_message = original_message.add_section(
+            text=MrkdwnText.create(f"❌ *Rejected by* <@{user_id}>"),
+            block_id="rejection_status"
+        )
+        
+        # Add input for rejection reason
+        updated_message = updated_message.add_input(
+            "Rejection Reason",
+            PlainTextInput.create("rejection_reason")
+            .placeholder("Please provide a reason for rejection")
+            .multiline(True)
+        )
+    
+    # Update the message in Slack
+    slack_client.chat_update(
+        channel=payload['channel']['id'],
+        ts=payload['message']['ts'],
+        blocks=updated_message.build()['blocks']
+    )
+
+# Example usage in Flask/Slack app
+@app.route('/slack/interactive', methods=['POST'])
+def handle_interactive():
+    payload = json.loads(request.form['payload'])
+    
+    if payload['type'] == 'block_actions':
+        handle_button_click(payload, slack_client)
+    
+    return '', 200
 ```
 
 ### 📝 Form Message
