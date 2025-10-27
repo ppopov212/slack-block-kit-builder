@@ -1633,7 +1633,7 @@ git clone https://github.com/your-org/slack-block-kit-builder.git
 cd slack-block-kit-builder
 
 # Install with development dependencies
-uv pip install -e ".[dev]"
+uv sync --group dev
 
 # Install pre-commit hooks
 pre-commit install
