@@ -1,0 +1,50 @@
+# Cursor Rules for Slack Blocksmith Project
+
+## Python Execution
+- Always use `uv` to run Python scripts and tools instead of direct `python` commands
+- Use `uv run python` instead of `python`
+- Use `uv run` for running Python tools and scripts
+- Use `uv add` for adding dependencies
+- Use `uv sync` for syncing dependencies
+
+## Examples:
+- `uv run python script.py` instead of `python script.py`
+- `uv run pytest` instead of `pytest`
+- `uv run mypy .` instead of `mypy .`
+- `uv add package-name` for adding dependencies
+- `uv sync` for installing dependencies
+
+## Static Analysis & Code Quality
+- Use `ruff` for linting (faster alternative to flake8, isort, etc.)
+- Use `ruff format` for code formatting (faster alternative to black)
+- Use `mypy` for static type checking
+- Always run these tools through `uv run` for consistency
+
+## Examples:
+- `uv run ruff check .` for linting
+- `uv run ruff format .` for formatting
+- `uv run mypy .` for type checking
+- `uv run ruff check --fix .` to auto-fix linting issues
+
+## Project Structure
+- This is a Python package for building Slack Block Kit messages
+- Main package is in `slack_blocksmith/`
+- Examples are in `examples/`
+- Tests are in `tests/`
+- Use `uv` for all Python-related operations
+
+## Testing & Development
+- When implementing or modifying features, always write tests
+- Use `uv run pytest` to run tests
+- Write tests before or alongside feature implementation
+- Ensure all tests pass before considering work complete
+- Test both happy path and edge cases
+- Use descriptive test names and docstrings
+
+## Code Style
+- Follow existing code style
+- Use type hints
+- Add docstrings for public methods
+- Use Pydantic for data validation
+- Run `ruff format` before committing
+- Fix all `ruff` and `mypy` issues before submitting code
